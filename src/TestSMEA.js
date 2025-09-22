@@ -33,14 +33,14 @@ function TestSMEA() {
           <li>Expand "View Sample Test Data" to see what data was analyzed</li>
         </ol>
         
-        <h4>🔍 What the Test Detects</h4>
+        <h4>What the Test Detects</h4>
         <ul>
           <li><strong>High Risk:</strong> Email addresses, phone numbers, SSN, credit card numbers</li>
           <li><strong>Medium Risk:</strong> Street addresses, birth dates, names, locations</li>
           <li><strong>Low Risk:</strong> Age information, sensitive keywords</li>
         </ul>
         
-        <h4>📊 Expected Results</h4>
+        <h4>Expected Results</h4>
         <p>The sample data contains intentionally problematic content including:</p>
         <ul>
           <li>Email and phone number in bio</li>
