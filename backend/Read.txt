@@ -1,0 +1,18 @@
+1. To run backend, first install any requirements in the backend folder.
+cd backend
+pip install -r requirements.txt
+
+2.Train the model
+"python train_model.py" or "python backend/train_model.py" if you are in the main directory
+
+3.Start the app
+"python app.py" or python backend/app.py"
+
+4.Open in google. I DONT HAVE GET COMMAND SO IT WONT OPEN
+http://127.0.0.1:5000/predict
+
+5.Open terminal, type in prompt
+curl -X POST http://127.0.0.1:5000/predict -H "Content-Type: application/json" -d "{\"email\": \"YOU WON A FREE LAMBO, CLICK NOW TO CLAIM.\"}"
+
+
+
