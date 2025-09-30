@@ -1,6 +1,11 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './App.css';
+import PhishingTrainer from './PhishingTrainer';
 
-function App() {
+function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -30,7 +35,7 @@ function App() {
             <h1>📧</h1>
             <h2>Phishing Training</h2>
             <p>Learn how to spot suspicious emails through practice.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/phishing-trainer')}>Go</button>
           </div>
 
           <div className="card">
@@ -46,6 +51,17 @@ function App() {
         <p>Team CAWWZ | UF Senior Project | Fall 2025</p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/phishing-trainer" element={<PhishingTrainer />} />
+      </Routes>
+    </Router>
   );
 }
 

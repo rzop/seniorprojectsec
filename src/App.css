@@ -74,3 +74,273 @@ button:hover {
   background: #1e2a38;
   color: white;
 }
+
+/* Phishing Trainer Styles */
+.phishing-trainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.trainer-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  background: #1e2a38;
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.trainer-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+}
+
+.trainer-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.trainer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.input-section {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.input-section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.input-section textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 150px;
+  box-sizing: border-box;
+}
+
+.input-section textarea:focus {
+  outline: none;
+  border-color: #1e2a38;
+  box-shadow: 0 0 0 3px rgba(30, 42, 56, 0.1);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.analyze-btn {
+  background: #1e2a38;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.analyze-btn:hover:not(:disabled) {
+  background: #34495e;
+}
+
+.analyze-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.clear-btn {
+  background: #95a5a6;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.clear-btn:hover:not(:disabled) {
+  background: #7f8c8d;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+  margin: 1rem 0;
+}
+
+.result-section {
+  margin-top: 2rem;
+}
+
+.result-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.result-header {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.result-icon {
+  font-size: 2rem;
+}
+
+.result-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.result-content {
+  padding: 1.5rem;
+}
+
+.result-label {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.result-details {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.result-details p {
+  margin: 0.5rem 0;
+}
+
+.warning-tips {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.warning-tips h4 {
+  margin-top: 0;
+  color: #856404;
+}
+
+.warning-tips ul {
+  margin: 0.5rem 0 0 1rem;
+  color: #856404;
+}
+
+.safety-tips {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.safety-tips h4 {
+  margin-top: 0;
+  color: #0c5460;
+}
+
+.safety-tips ul {
+  margin: 0.5rem 0 0 1rem;
+  color: #0c5460;
+}
+
+.info-section {
+  margin-top: 2rem;
+}
+
+.info-card {
+  background: #e9ecef;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #1e2a38;
+}
+
+.info-card h3 {
+  margin-top: 0;
+  color: #1e2a38;
+}
+
+.info-card p {
+  margin-bottom: 0.5rem;
+  color: #495057;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .phishing-trainer {
+    padding: 1rem;
+  }
+  
+  .trainer-header {
+    padding: 1.5rem;
+  }
+  
+  .trainer-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .input-section {
+    padding: 1.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .analyze-btn, .clear-btn {
+    width: 100%;
+  }
+}
