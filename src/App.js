@@ -1,6 +1,11 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import TestSMEA from './TestSMEA';
 import './App.css';
 
-function App() {
+function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -34,10 +39,10 @@ function App() {
           </div>
 
           <div className="card">
-            <h1>📱 </h1>
+            <h1>📱</h1>
             <h2>Social Media Analyzer</h2>
             <p>See what personal info you might be exposing online.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/instagram-test')}>Go</button>
           </div>
         </section>
       </main>
@@ -46,6 +51,17 @@ function App() {
         <p>Team CAWWZ | UF Senior Project | Fall 2025</p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/instagram-test" element={<TestSMEA />} />
+      </Routes>
+    </Router>
   );
 }
 
