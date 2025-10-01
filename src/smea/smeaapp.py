@@ -157,7 +157,7 @@ if __name__ == "__main__":
     # Check configuration
     apify_token = os.getenv("APIFY_TOKEN")
     if not apify_token or apify_token == "your_apify_token_here":
-        print("⚠️  WARNING: APIFY_TOKEN not configured in .env file")
+        print("   WARNING: APIFY_TOKEN not configured in .env file")
         print("   Get your token from: https://console.apify.com/account/integrations")
     else:
         print("✅ Apify token configured")
