@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Quick start script for SMEA Instagram Privacy Analyzer
+quick start script for SMEA Instagram Privacy Analyzer
 """
 import subprocess
 import sys
 import os
 
 def install_requirements():
-    """Install required packages"""
+    """installs required packages"""
     print("Installing requirements...")
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
@@ -29,32 +29,32 @@ def check_env_file():
             print("✅ Apify token configured")
             return True
         else:
-            print("⚠️  Please set your APIFY_TOKEN in .env file")
+            print("Please set your APIFY_TOKEN in .env file")
             return False
 
 def start_server():
     """Start the Flask server"""
-    print("🚀 Starting SMEA server...")
+    print("Starting SMEA server...")
     try:
-        subprocess.run([sys.executable, "app.py"])
+        subprocess.run([sys.executable, "smeaapp.py"])
     except KeyboardInterrupt:
-        print("\n👋 Server stopped")
+        print("\nServer stopped")
 
 if __name__ == "__main__":
-    print("🔍 SMEA Instagram Privacy Analyzer Setup")
+    print("SMEA Instagram Privacy Analyzer Setup")
     print("=" * 50)
     
-    # Install requirements
+    # installs requirements
     if not install_requirements():
         sys.exit(1)
     
-    # Check environment
+    # checks environment
     env_ok = check_env_file()
     
     if env_ok:
         start_server()
     else:
-        print("\n📝 To configure:")
+        print("\nTo configure:")
         print("1. Edit .env file")
         print("2. Set APIFY_TOKEN=your_actual_token")
         print("3. Run: python start.py")

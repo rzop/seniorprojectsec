@@ -4,7 +4,7 @@ from typing import Dict, List, Any, Union
 class PIIEngine:
     def __init__(self):
         self.patterns = {
-            # High-risk patterns
+            # high-risk patterns
             'email': {
                 'regex': re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
                 'severity': 'high',
@@ -26,7 +26,7 @@ class PIIEngine:
                 'description': 'Credit card number pattern detected'
             },
             
-            # Medium-risk patterns
+            # medium-risk patterns
             'address': {
                 'regex': re.compile(r'\b\d+\s+[A-Za-z0-9\s,.-]+(?:Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr|Lane|Ln|Way|Court|Ct|Place|Pl)\b', re.IGNORECASE),
                 'severity': 'medium',
@@ -48,7 +48,7 @@ class PIIEngine:
                 'description': 'Location information detected'
             },
             
-            # Low-risk patterns
+            # low-risk patterns
             'age': {
                 'regex': re.compile(r'\b(?:age|years old|i\'m|i am)\s*(?:is\s*)?\d{1,2}\b', re.IGNORECASE),
                 'severity': 'low',
@@ -62,7 +62,7 @@ class PIIEngine:
         }
 
     def scan_for_pii(self, text_data: Union[str, Dict]) -> List[Dict]:
-        """Scan text data for PII patterns"""
+        """scans text data for PII patterns"""
         findings = []
         text_sources = self._normalize_text_data(text_data)
         
@@ -78,7 +78,7 @@ class PIIEngine:
         return self._deduplicate_findings(findings)
 
     def _normalize_text_data(self, text_data: Union[str, Dict]) -> Dict:
-        """Normalize different input formats"""
+        """normalizes different input formats"""
         if isinstance(text_data, str):
             return {'content': [text_data]}
         
@@ -104,7 +104,7 @@ class PIIEngine:
         return {'content': []}
 
     def _scan_text(self, text: str, location: str, index: int = 0) -> List[Dict]:
-        """Scan individual text for PII patterns"""
+        """scans individual text for PII patterns"""
         findings = []
         
         for pii_type, pattern_info in self.patterns.items():
@@ -130,7 +130,7 @@ class PIIEngine:
         return findings
 
     def _get_context(self, text: str, match: str, context_length: int = 50) -> str:
-        """Get surrounding context for a match"""
+        """gets surrounding context for a match"""
         try:
             match_index = text.lower().find(match.lower())
             if match_index == -1:
@@ -151,7 +151,7 @@ class PIIEngine:
             return text[:100] + "..." if len(text) > 100 else text
 
     def _calculate_confidence(self, pii_type: str, match: str, context: str) -> float:
-        """Calculate confidence score for a PII finding"""
+        """calculates confidence score for a PII finding"""
         confidence = 0.7
         
         if pii_type == 'email':
@@ -194,7 +194,7 @@ class PIIEngine:
         return len(parts) >= 2 and all(len(part) > 1 for part in parts)
 
     def _deduplicate_findings(self, findings: List[Dict]) -> List[Dict]:
-        """Remove duplicate findings"""
+        """removes duplicate findings"""
         seen = set()
         unique_findings = []
         
@@ -207,7 +207,7 @@ class PIIEngine:
         return unique_findings
 
     def get_summary(self, findings: List[Dict]) -> Dict:
-        """Get summary statistics for findings"""
+        """gets summary statistics for findings"""
         summary = {
             'total': len(findings),
             'high': 0,
@@ -224,3 +224,5 @@ class PIIEngine:
             summary['types'][pii_type] = summary['types'].get(pii_type, 0) + 1
 
         return summary
+
+

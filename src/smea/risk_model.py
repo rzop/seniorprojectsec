@@ -31,7 +31,7 @@ class RiskModel:
         }
 
     def calculate_risk_score(self, analysis_data: List[Dict]) -> int:
-        """Calculate overall risk score from analysis data"""
+        """calculates overall risk score from analysis data"""
         if not analysis_data:
             return 0
 
@@ -76,7 +76,7 @@ class RiskModel:
         return min(100, round(normalized_score))
 
     def get_risk_level(self, score: int) -> str:
-        """Get risk level based on score"""
+        """gets risk level based on score"""
         if score >= 80:
             return 'critical'
         elif score >= 60:
@@ -89,7 +89,7 @@ class RiskModel:
             return 'minimal'
 
     def generate_recommendations(self, analysis_data: List[Dict]) -> List[Dict]:
-        """Generate privacy recommendations based on findings"""
+        """generates privacy recommendations based on findings"""
         recommendations = []
         all_findings = []
         
@@ -106,7 +106,7 @@ class RiskModel:
 
         findings_by_type = self._group_findings_by_type(all_findings)
         
-        # High-priority recommendations
+        # high-priority recommendations
         if 'email' in findings_by_type:
             recommendations.append({
                 'title': 'Remove Email Addresses',
@@ -143,7 +143,7 @@ class RiskModel:
                 'affectedCount': len(findings_by_type['creditCard'])
             })
 
-        # Medium-priority recommendations
+        # medium-priority recommendations
         if 'address' in findings_by_type:
             recommendations.append({
                 'title': 'Consider Hiding Home Address',
@@ -171,7 +171,7 @@ class RiskModel:
                 'affectedCount': len(findings_by_type['fullName'])
             })
 
-        # General recommendations based on overall risk
+        # general recommendations based on overall risk
         risk_score = self.calculate_risk_score(analysis_data)
         
         if risk_score >= 60:
@@ -198,7 +198,7 @@ class RiskModel:
                 'category': 'general'
             })
 
-        # Platform-specific recommendations
+        # platform-specific recommendations
         for platform_data in analysis_data:
             if platform_data.get('platform') == 'instagram' and platform_data.get('findings'):
                 recommendations.append({
@@ -208,7 +208,7 @@ class RiskModel:
                     'category': 'platform_specific'
                 })
 
-        # Low-priority general recommendations
+        # low-priority general recommendations
         recommendations.extend([
             {
                 'title': 'Regular Privacy Audits',
@@ -227,7 +227,7 @@ class RiskModel:
         return self._sort_recommendations_by_priority(recommendations)
 
     def _group_findings_by_type(self, findings: List[Dict]) -> Dict[str, List[Dict]]:
-        """Group findings by type"""
+        """group findings by type"""
         groups = {}
         for finding in findings:
             pii_type = finding.get('type')
@@ -237,7 +237,7 @@ class RiskModel:
         return groups
 
     def _sort_recommendations_by_priority(self, recommendations: List[Dict]) -> List[Dict]:
-        """Sort recommendations by priority"""
+        """sorts recommendations by priority"""
         priority_order = {'high': 3, 'medium': 2, 'low': 1}
         return sorted(
             recommendations,
@@ -246,7 +246,7 @@ class RiskModel:
         )
 
     def get_analysis_summary(self, analysis_data: List[Dict]) -> Dict:
-        """Get comprehensive analysis summary"""
+        """gets comprehensive analysis summary"""
         all_findings = []
         for data in analysis_data:
             all_findings.extend(data.get('findings', []))
@@ -282,7 +282,7 @@ class RiskModel:
         }
 
     def _calculate_platform_risk_contribution(self, platform_data: Dict, all_analysis_data: List[Dict]) -> int:
-        """Calculate how much a platform contributes to overall risk"""
+        """calculates how much a platform contributes to overall risk"""
         platform_score = self.calculate_risk_score([platform_data])
         total_score = self.calculate_risk_score(all_analysis_data)
         
@@ -290,3 +290,5 @@ class RiskModel:
             return 0
         
         return round((platform_score / total_score) * 100)
+
+

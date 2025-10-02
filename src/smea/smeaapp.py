@@ -12,11 +12,11 @@ from instagram_service import InstagramService
 from pii_engine import PIIEngine
 from risk_model import RiskModel
 
-# Load environment variables from local .env file
+# loads environment variables from local .env file
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend (React) to connect
+CORS(app)  # allows frontend to connect
 
 @app.route("/")
 def home():
@@ -33,7 +33,7 @@ def home():
 @app.route("/instagram/validate", methods=["GET"])
 def validate_instagram_service():
     """
-    Validate Instagram service configuration
+    validates Instagram service configuration
     """
     try:
         instagram_service = InstagramService.create_service()
@@ -59,7 +59,7 @@ def validate_instagram_service():
 @app.route("/instagram/analyze", methods=["POST"])
 def analyze_instagram():
     """
-    Analyze Instagram profile for PII exposure
+    analyzes Instagram profile for PII exposure
     """
     try:
         data = request.get_json()
@@ -70,24 +70,24 @@ def analyze_instagram():
 
         print(f"Starting analysis for @{username}")
 
-        # Initialize services
+        # initializes services
         instagram_service = InstagramService.create_service()
         pii_engine = PIIEngine()
         risk_model = RiskModel()
 
-        # Get Instagram data
+        # gets Instagram data
         user_data = instagram_service.get_user_data(username)
         print(f"Retrieved data for @{username}")
         
-        # Extract text content for analysis
+        # extracts text content for analysis
         text_content = instagram_service.extract_text_content(user_data)
         print(f"Extracted text content: {len(text_content.get('posts', []))} posts")
         
-        # Run PII analysis
+        # runs PII analysis
         findings = pii_engine.scan_for_pii(text_content)
         print(f"Found {len(findings)} PII findings")
         
-        # Calculate risk assessment
+        # calculates risk assessment
         analysis_data = [{"platform": "instagram", "findings": findings}]
         risk_score = risk_model.calculate_risk_score(analysis_data)
         risk_level = risk_model.get_risk_level(risk_score)
@@ -95,7 +95,7 @@ def analyze_instagram():
         
         print(f"Risk score: {risk_score}/100 ({risk_level})")
         
-        # Prepare response
+        # prepares response
         response_data = {
             "success": True,
             "userData": user_data,
@@ -103,7 +103,7 @@ def analyze_instagram():
             "findings": findings,
             "riskScore": risk_score,
             "riskLevel": risk_level,
-            "recommendations": recommendations[:8],  # Limit to top 8
+            "recommendations": recommendations[:8],  # limits to top 8
             "totalFindings": len(findings),
             "severityBreakdown": pii_engine.get_summary(findings),
             "profileStats": {
@@ -132,9 +132,7 @@ def analyze_instagram():
 
 @app.route("/health", methods=["GET"])
 def health_check():
-    """
-    Health check endpoint
-    """
+    """health check endpoint"""
     apify_token_configured = bool(os.getenv("APIFY_TOKEN"))
     
     return jsonify({
@@ -154,7 +152,7 @@ if __name__ == "__main__":
     print("SMEA Instagram Privacy Analyzer")
     print("=" * 50)
     
-    # Check configuration
+    # checks configuration
     apify_token = os.getenv("APIFY_TOKEN")
     if not apify_token or apify_token == "your_apify_token_here":
         print("   WARNING: APIFY_TOKEN not configured in .env file")
