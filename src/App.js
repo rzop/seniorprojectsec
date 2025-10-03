@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import TestSMEA from './TestSMEA';
+import PasswordChecker from './passwordchecker';
 import './App.css';
 
 function HomePage() {
@@ -28,7 +29,7 @@ function HomePage() {
             <h1>🔑</h1>
             <h2>Password Checker</h2>
             <p>Test your password strength and generate secure ones.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/password-checker')}>Go</button>
           </div>
 
           <div className="card">
@@ -60,6 +61,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/instagram-test" element={<TestSMEA />} />
+	<Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>
   );

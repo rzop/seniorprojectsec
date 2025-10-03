@@ -3,6 +3,8 @@ import './App.css';
 
 function PasswordChecker() {
   const [password, setPassword] = useState('');
+  const [isChecking, setIsChecking] = useState(false);
+  const [result, setResult] = useState(null);
 
   const sha1 = async (message) => {
     const msgBuffer = new TextEncoder().encode(message);
@@ -14,6 +16,9 @@ function PasswordChecker() {
 
   const checkPassword = async () => {
     if (!password) return;
+    
+    setIsChecking(true);
+    setResult(null);
     
     try {
       const hash = await sha1(password);
@@ -30,31 +35,45 @@ function PasswordChecker() {
       });
       
       if (match) {
-        console.log('Password found in database');
+        const count = match.split(':')[1];
+        setResult(`Password found in ${count} breaches`);
       } 
       else {
-        console.log('Password not found in database');
+        setResult('Password not found in known breaches');
       }
     } 
     catch (error) {
-      console.error('Error occurred:', error);
+      console.error('Error:', error);
+      setResult('Error checking password');
+    } 
+    finally {
+      setIsChecking(false);
     }
   };
 
   return (
-    <div>
-      <h1>Password Breach Checker</h1>
-      <div>
-        <input
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter password to check"
-        />
-        <button onClick={checkPassword}>
-          Check
-        </button>
-      </div>
+    <div className="App">
+      <header className="App-header">
+        <h1>Password Breach Checker</h1>
+        <p className="subtitle">
+          Check if your password has been compromised in a data breach
+        </p>
+      </header>
+      <main className="App-main">
+        <div>
+          <input
+            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password to check"
+            disabled={isChecking}
+          />
+          <button onClick={checkPassword} disabled={isChecking || !password}>
+            {isChecking ? 'Checking...' : 'Check Password'}
+          </button>
+        </div>
+        {result && <p>{result}</p>}
+      </main>
     </div>
   );
 }
