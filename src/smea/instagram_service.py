@@ -1,48 +1,39 @@
-import requests
 import time
 import os
 from typing import Dict, List, Optional
+from apify_client import ApifyClient
 
 class InstagramService:
     def __init__(self, apify_token: str):
         self.apify_token = apify_token
-        self.base_url = 'https://api.apify.com/v2'
-        self.actor_id = 'apify/instagram-scraper'
-        self.session = requests.Session()
-        self.session.headers.update({
-            'Authorization': f'Bearer {apify_token}',
-            'Content-Type': 'application/json'
-        })
+        self.client = ApifyClient(apify_token)
+        # updated to the actor ID from your example - this is the correct Instagram scraper
+        self.actor_id = 'shu8hvrXbJbY3Eb9W'
 
     def get_user_data(self, username: str) -> Dict:
-        """Scrape Instagram user data using Apify"""
+        """scrapes Instagram user data using Apify"""
         try:
             if not username:
                 raise ValueError('Username is required')
 
-            run_data = {
-                'directUrls': [f'https://www.instagram.com/{username}/'],
-                'resultsType': 'posts',
-                'resultsLimit': 25,
-                'addParentData': True,
-                'extendOutputFunction': '($) => { return {}; }',
-                'customData': ''
+            # prepares actor input for Instagram scraper
+            run_input = {
+                "directUrls": [f"https://www.instagram.com/{username}/"],
+                "resultsType": "posts",
+                "resultsLimit": 25,
+                "addParentData": True
             }
 
-            run_response = self.session.post(
-                f'{self.base_url}/acts/{self.actor_id}/runs',
-                json=run_data,
-                timeout=30
-            )
-            run_response.raise_for_status()
+            # runs the actor and wait for it to finish
+            run = self.client.actor(self.actor_id).call(run_input=run_input)
             
-            run_id = run_response.json()['data']['id']
-            results = self._wait_for_completion(run_id)
+            # fetches results from the run's dataset
+            items = list(self.client.dataset(run["defaultDatasetId"]).iterate_items())
             
-            if not results:
+            if not items:
                 raise ValueError('No data returned from Instagram scraper')
 
-            processed_data = self._process_results(results, username)
+            processed_data = self._process_results(items, username)
             
             return {
                 'platform': 'instagram',
@@ -55,41 +46,9 @@ class InstagramService:
         except Exception as e:
             raise Exception(f'Instagram service error: {str(e)}')
 
-    def _wait_for_completion(self, run_id: str, max_wait_time: int = 300) -> List[Dict]:
-        """Wait for Apify run to complete"""
-        start_time = time.time()
-        poll_interval = 5
-        
-        while time.time() - start_time < max_wait_time:
-            try:
-                status_response = self.session.get(
-                    f'{self.base_url}/acts/{self.actor_id}/runs/{run_id}',
-                    timeout=30
-                )
-                status_response.raise_for_status()
-                
-                status = status_response.json()['data']['status']
-                
-                if status == 'SUCCEEDED':
-                    results_response = self.session.get(
-                        f'{self.base_url}/acts/{self.actor_id}/runs/{run_id}/dataset/items',
-                        timeout=30
-                    )
-                    results_response.raise_for_status()
-                    return results_response.json()
-                    
-                elif status in ['FAILED', 'ABORTED', 'TIMED-OUT']:
-                    raise Exception(f'Instagram scraping run failed with status: {status}')
-                
-                time.sleep(poll_interval)
-                
-            except requests.exceptions.RequestException as e:
-                time.sleep(poll_interval)
-        
-        raise Exception('Instagram scraping run timed out')
 
     def _process_results(self, results: List[Dict], username: str) -> Dict:
-        """Process raw Apify results"""
+        """processes raw Apify results"""
         first_result = results[0] if results else {}
         
         user = {
@@ -126,7 +85,7 @@ class InstagramService:
         return {'user': user, 'media': media, 'biography': biography}
 
     def extract_text_content(self, user_data: Dict) -> Dict:
-        """Extract text content for PII analysis"""
+        """extracts text content for PII analysis"""
         text_content = {
             'bio': user_data.get('biography', ''),
             'posts': [],
@@ -142,17 +101,35 @@ class InstagramService:
         return text_content
 
     def validate_token(self) -> Dict:
-        """Validate Apify token"""
+        """validates Apify token - modified to be more permissive"""
         try:
-            response = self.session.get(f'{self.base_url}/users/me', timeout=30)
-            response.raise_for_status()
-            return {'valid': True, 'data': response.json()['data']}
+            # First try to access the Instagram actor
+            try:
+                actor_info = self.client.actor(self.actor_id).get()
+                return {
+                    'valid': True, 
+                    'message': f'Instagram scraper accessible: {actor_info.get("name", "Unknown")}',
+                    'actor_id': self.actor_id
+                }
+            except Exception as actor_error:
+                # If actor access fails, try a basic API call to test token validity
+                try:
+                    # Try to get user info as a fallback test
+                    user_info = self.client.user().get()
+                    return {
+                        'valid': True, 
+                        'message': f'Token valid for user {user_info.get("username", "Unknown")}, but Instagram actor access limited',
+                        'warning': f'Actor access failed: {str(actor_error)}'
+                    }
+                except Exception as user_error:
+                    # If both fail, the token is definitely invalid
+                    return {'valid': False, 'error': f'Token validation failed: {str(user_error)}'}
         except Exception as e:
-            return {'valid': False, 'error': str(e)}
+            return {'valid': False, 'error': f'General validation error: {str(e)}'}
 
     @staticmethod
     def create_service(apify_token: Optional[str] = None) -> 'InstagramService':
-        """Create service with token from environment"""
+        """creates service with token from environment"""
         token = apify_token or os.getenv('APIFY_TOKEN')
         if not token:
             raise ValueError('APIFY_TOKEN not found in environment variables')
