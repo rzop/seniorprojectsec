@@ -28,7 +28,7 @@ function Home() {
             <h1>🔑</h1>
             <h2>Password Checker</h2>
             <p>Test your password strength and generate secure ones.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/password-checker')}>Go</button>
           </div>
 
           <div className="card">
@@ -39,10 +39,10 @@ function Home() {
           </div>
 
           <div className="card">
-            <h1>📱 </h1>
+            <h1>📱</h1>
             <h2>Social Media Analyzer</h2>
             <p>See what personal info you might be exposing online.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/instagram-test')}>Go</button>
           </div>
         </section>
       </main>
@@ -60,6 +60,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
+        <Route path="/instagram-test" element={<TestSMEA />} />
+	<Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>
   );
