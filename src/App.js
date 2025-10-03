@@ -1,7 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
+import TestSMEA from './TestSMEA';
+import PasswordChecker from './passwordchecker';
 
 function Home() {
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/instagram-test" element={<TestSMEA />} />
-	<Route path="/password-checker" element={<PasswordChecker />} />
+        <Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>
   );
