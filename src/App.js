@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import TestSMEA from './TestSMEA';
-import PasswordChecker from './passwordchecker';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './App.css';
+import PhishingTrainer from './PhishingTrainer';
 
-function HomePage() {
+function Home() {
   const navigate = useNavigate();
 
   return (
@@ -36,7 +35,7 @@ function HomePage() {
             <h1>📧</h1>
             <h2>Phishing Training</h2>
             <p>Learn how to spot suspicious emails through practice.</p>
-            <button>Go</button>
+            <button onClick={() => navigate('/phishing-trainer')}>Go</button>
           </div>
 
           <div className="card">
@@ -59,7 +58,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/instagram-test" element={<TestSMEA />} />
 	<Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
