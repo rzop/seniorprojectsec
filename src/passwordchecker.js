@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import './App.css';
-
+//Top 10 common password and NIST guideline is according to protonpass.
 function PasswordChecker() {
   const [password, setPassword] = useState('');
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState(null);
-
+  const [lengthWarning, setLengthWarning] = useState(null);
+ 
+  const TOP_10_COMMON_PASSWORDS = [
+    '123456',
+    '123456789',
+    '12345678',
+    'password',
+    'qwerty123',
+    'qwerty1',
+    '111111',
+    '12345',
+    'secret',
+    '123123'
+  ];
+  
   const sha1 = async (message) => {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
@@ -13,9 +27,29 @@ function PasswordChecker() {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex.toUpperCase();
   };
-
+  
+  const checkPasswordLength = (pwd) => {
+    if (pwd.length < 8) {
+      setLengthWarning('Password must be at least 8 characters (NIST requirement)');
+    }
+    else if (pwd.length >= 8 && pwd.length < 15) {
+      setLengthWarning('Meets minimum but NIST recommends 15+ characters for better security');
+    }
+    else {
+      setLengthWarning('Great! Password length meets NIST recommendations');
+    }
+  };
+  
   const checkPassword = async () => {
     if (!password) return;
+    
+    checkPasswordLength(password);
+    
+    if (TOP_10_COMMON_PASSWORDS.includes(password.toLowerCase())) {
+      setResult('WARNING: This is one of the top 10 most common passwords. Never use this password!');
+      setIsChecking(false);
+      return;
+    }
     
     setIsChecking(true);
     setResult(null);
@@ -35,22 +69,22 @@ function PasswordChecker() {
       });
       
       if (match) {
-        const count = match.split(':')[1];
-        setResult(`Password found in ${count} breaches`);
+        const count = match.split(':')[1].trim();
+        setResult(`Password found in ${parseInt(count).toLocaleString()} data breaches! Do not use this password.`);
       } 
       else {
-        setResult('Password not found in known breaches');
+        setResult('Good news! Password not found in known data breaches.');
       }
     } 
     catch (error) {
       console.error('Error:', error);
-      setResult('Error checking password');
+      setResult('Error checking password. Please try again.');
     } 
     finally {
       setIsChecking(false);
     }
   };
-
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -73,6 +107,19 @@ function PasswordChecker() {
           </button>
         </div>
         {result && <p>{result}</p>}
+        {lengthWarning && <p>{lengthWarning}</p>}
+        
+        <section>
+          <h3>2025 NIST Password Guidelines</h3>
+          <ul>
+            <li><strong>Use longer passwords</strong></li>
+            <li><strong>Drop complexity requirements</strong></li>
+            <li><strong>No more forced password resets</strong></li>
+            <li><strong>Maintain a password blocklist</strong></li>
+            <li><strong>Eliminate security questions</strong></li>
+            <li><strong>Use modern security tools</strong></li>
+          </ul>
+        </section>
       </main>
     </div>
   );
