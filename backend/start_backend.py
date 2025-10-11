@@ -41,19 +41,20 @@ def check_env_file():
 
 def check_requirements():
     """checks if required packages are installed"""
-    required_packages = [
-        'flask',
-        'flask_cors',
-        'python-dotenv',
-        'apify_client',
-        'joblib',
-        'sklearn'
-    ]
+    # Map package names to their import names
+    required_packages = {
+        'flask': 'flask',
+        'flask-cors': 'flask_cors',
+        'python-dotenv': 'dotenv',
+        'apify-client': 'apify_client',
+        'joblib': 'joblib',
+        'sklearn': 'sklearn'
+    }
     
     missing_packages = []
-    for package in required_packages:
+    for package, import_name in required_packages.items():
         try:
-            __import__(package.replace('-', '_'))
+            __import__(import_name)
         except ImportError:
             missing_packages.append(package)
     
@@ -132,4 +133,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
