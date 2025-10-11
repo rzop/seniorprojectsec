@@ -292,3 +292,4 @@ class RiskModel:
         return round((platform_score / total_score) * 100)
 
 
+

@@ -1,11 +1,11 @@
 flask
+flask-cors
 python-dotenv
 requests
-flask-cors
-openai
-firebase-admin
 scikit-learn
 pandas
 numpy
 joblib
 nltk
+apify-client
+
