@@ -4,6 +4,7 @@ import './App.css';
 import PhishingTrainer from './PhishingTrainer';
 import TestSMEA from './TestSMEA';
 import PasswordChecker from './passwordchecker';
+import PasswordGenerator from './passwordgenerator';
 
 function Home() {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/instagram-test" element={<TestSMEA />} />
+	<Route path="/password-generator" element={<PasswordGenerator />} />
         <Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
+
 //Top 10 common password and NIST guideline is according to protonpass.
 function PasswordChecker() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isChecking, setIsChecking] = useState(false);
   const [result, setResult] = useState(null);
@@ -108,7 +111,9 @@ function PasswordChecker() {
         </div>
         {result && <p>{result}</p>}
         {lengthWarning && <p>{lengthWarning}</p>}
-        
+	<button onClick={() => navigate('/password-generator')}>
+          Generate a Strong Password
+        </button>
         <section>
           <h3>2025 NIST Password Guidelines</h3>
           <ul>
