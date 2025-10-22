@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import phishingBg from './assets/phishing-bg.png';
+import safeBg from './assets/safe-bg.jpg';
+
+
 
 const PhishingTrainer = () => {
   const navigate = useNavigate();
@@ -47,8 +51,28 @@ const PhishingTrainer = () => {
     return label === 'phishing' ? '⚠️' : '✅';
   };
 
+  const getBackgroundStyle = () => {
+  if (result && result.label === 'phishing') {
+    return {
+      backgroundImage: `url(${phishingBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      transition: 'background 0.5s ease-in-out',
+    };
+  }
+  return {
+    backgroundImage: `url(${safeBg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      transition: 'background 0.5s ease-in-out',
+  };
+};
+
+
   return (
-    <div className="phishing-trainer">
+    <div className="phishing-trainer" style={getBackgroundStyle()}>
       <div className="trainer-header">
         <button 
           onClick={() => navigate('/')} 
