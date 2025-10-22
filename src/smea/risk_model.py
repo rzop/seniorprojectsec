@@ -207,6 +207,19 @@ class RiskModel:
                     'priority': 'medium',
                     'category': 'platform_specific'
                 })
+            elif platform_data.get('platform') == 'facebook' and platform_data.get('findings'):
+                recommendations.append({
+                    'title': 'Review Facebook Privacy Settings',
+                    'description': 'Check your Facebook privacy settings and limit who can see your posts and personal information.',
+                    'priority': 'medium',
+                    'category': 'platform_specific'
+                })
+                recommendations.append({
+                    'title': 'Audit Facebook Posts History',
+                    'description': 'Review and delete old Facebook posts that may contain sensitive information.',
+                    'priority': 'medium',
+                    'category': 'platform_specific'
+                })
 
         # low-priority general recommendations
         recommendations.extend([

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
-import TestSMEA from './TestSMEA';
+import UnifiedSocialMediaAnalyzer from './UnifiedSocialMediaAnalyzer';
 import PasswordChecker from './passwordchecker';
 
 function Home() {
@@ -41,10 +41,10 @@ function Home() {
           </div>
 
           <div className="card">
-            <h1>📱</h1>
+            <h1>📱📘</h1>
             <h2>Social Media Analyzer</h2>
-            <p>See what personal info you might be exposing online.</p>
-            <button onClick={() => navigate('/instagram-test')}>Go</button>
+            <p>Analyze Instagram profiles and Facebook pages for privacy exposure.</p>
+            <button onClick={() => navigate('/social-media-analyzer')}>Go</button>
           </div>
         </section>
       </main>
@@ -62,7 +62,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
-        <Route path="/instagram-test" element={<TestSMEA />} />
+        <Route path="/social-media-analyzer" element={<UnifiedSocialMediaAnalyzer />} />
         <Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>

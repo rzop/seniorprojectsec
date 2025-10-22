@@ -14,6 +14,7 @@ import joblib
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.smea.instagram_service import InstagramService
+from src.smea.facebook_service import FacebookService
 from src.smea.pii_engine import PIIEngine
 from src.smea.risk_model import RiskModel
 
@@ -197,6 +198,107 @@ def analyze_instagram():
         return jsonify({"success": False, "error": error_msg}), 500
 
 # ============================================================================
+# FACEBOOK ANALYSIS ENDPOINTS
+# ============================================================================
+
+@app.route("/facebook/validate", methods=["GET"])
+def validate_facebook_service():
+    """Validates Facebook service configuration"""
+    try:
+        facebook_service = FacebookService.create_service()
+        validation_result = facebook_service.validate_token()
+        
+        if validation_result["valid"]:
+            return jsonify({
+                "valid": True,
+                "message": "Facebook service is properly configured",
+                "details": validation_result
+            })
+        else:
+            return jsonify({
+                "valid": False,
+                "error": validation_result.get("error", "Validation failed")
+            }), 500
+            
+    except Exception as e:
+        return jsonify({
+            "valid": False,
+            "error": f"Service configuration error: {str(e)}"
+        }), 500
+
+@app.route("/facebook/analyze", methods=["POST"])
+def analyze_facebook():
+    """Analyzes Facebook page for PII exposure"""
+    try:
+        data = request.get_json()
+        page_url = data.get("pageUrl", "").strip()
+
+        if not page_url:
+            return jsonify({"error": "Page URL is required"}), 400
+
+        print(f"[INFO] Starting Facebook analysis for {page_url}")
+
+        # Initialize services
+        facebook_service = FacebookService.create_service()
+        pii_engine = PIIEngine()
+        risk_model = RiskModel()
+
+        # Get Facebook data
+        user_data = facebook_service.get_user_data(page_url)
+        print(f"[INFO] Retrieved data for {user_data.get('user', {}).get('name', 'Unknown')}")
+        
+        # Extract text content for analysis
+        text_content = facebook_service.extract_text_content(user_data)
+        print(f"[INFO] Extracted text content: {len(text_content.get('posts', []))} posts")
+        
+        # Run PII analysis
+        findings = pii_engine.scan_for_pii(text_content)
+        print(f"[WARNING] Found {len(findings)} PII findings")
+        
+        # Calculate risk assessment
+        analysis_data = [{"platform": "facebook", "findings": findings}]
+        risk_score = risk_model.calculate_risk_score(analysis_data)
+        risk_level = risk_model.get_risk_level(risk_score)
+        recommendations = risk_model.generate_recommendations(analysis_data)
+        
+        print(f"[INFO] Risk score: {risk_score}/100 ({risk_level})")
+        
+        # Prepare response
+        response_data = {
+            "success": True,
+            "userData": user_data,
+            "textContent": text_content,
+            "findings": findings,
+            "riskScore": risk_score,
+            "riskLevel": risk_level,
+            "recommendations": recommendations[:8],  # Limit to top 8
+            "totalFindings": len(findings),
+            "severityBreakdown": pii_engine.get_summary(findings),
+            "profileStats": {
+                "postsAnalyzed": len(text_content.get("posts", [])),
+                "commentsAnalyzed": len(text_content.get("comments", [])),
+                "totalTextLength": len(" ".join([
+                    text_content.get("bio", ""),
+                    *text_content.get("posts", []),
+                    *text_content.get("comments", [])
+                ])),
+                "hasProfilePicture": bool(user_data.get("user", {}).get("profilePictureUrl")),
+                "isVerified": user_data.get("user", {}).get("isVerified", False)
+            }
+        }
+        
+        return jsonify(response_data)
+
+    except ValueError as e:
+        error_msg = f"Configuration error: {str(e)}"
+        print(f"[ERROR] {error_msg}")
+        return jsonify({"success": False, "error": error_msg}), 500
+    except Exception as e:
+        error_msg = f"Analysis failed: {str(e)}"
+        print(f"[ERROR] {error_msg}")
+        return jsonify({"success": False, "error": error_msg}), 500
+
+# ============================================================================
 # ERROR HANDLERS
 # ============================================================================
 
@@ -228,12 +330,14 @@ if __name__ == "__main__":
         print("[ERROR] Phishing Detection: MODEL NOT LOADED")
         print("   Run 'python train_model.py' to train the model")
     
-    # Instagram analyzer
+    # Social media analyzers
     apify_token = os.getenv("APIFY_TOKEN")
     if apify_token and apify_token != "your_apify_token_here":
         print("[OK] Instagram Analyzer: READY")
+        print("[OK] Facebook Analyzer: READY")
     else:
         print("[WARNING] Instagram Analyzer: APIFY_TOKEN not configured")
+        print("[WARNING] Facebook Analyzer: APIFY_TOKEN not configured")
         print("   Get your token from: https://console.apify.com/account/integrations")
     
     print("-" * 70)
@@ -244,6 +348,8 @@ if __name__ == "__main__":
     print("   - POST /phishing/predict")
     print("   - GET  /instagram/validate")
     print("   - POST /instagram/analyze")
+    print("   - GET  /facebook/validate")
+    print("   - POST /facebook/analyze")
     print("\n[INFO] Press Ctrl+C to stop\n")
     
     app.run(
