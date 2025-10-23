@@ -5,6 +5,8 @@ import PhishingTrainer from './PhishingTrainer';
 import UnifiedSocialMediaAnalyzer from './UnifiedSocialMediaAnalyzer';
 import PasswordChecker from './passwordchecker';
 import PasswordGenerator from './passwordgenerator';
+import backgroundGif from './assets/backgroundgif.gif';
+
 
 function Home() {
   const navigate = useNavigate();
