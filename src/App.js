@@ -64,8 +64,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/social-media-analyzer" element={<UnifiedSocialMediaAnalyzer />} />
-        <Route path="/instagram-test" element={<TestSMEA />} />
-	<Route path="/password-generator" element={<PasswordGenerator />} />
+	      <Route path="/password-generator" element={<PasswordGenerator />} />
         <Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>
