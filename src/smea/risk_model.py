@@ -10,16 +10,30 @@ class RiskModel:
         }
 
         self.type_weights = {
+            # High-risk indicators
             'email': 15,
             'phone': 15,
-            'ssn': 20,
-            'creditCard': 20,
-            'address': 10,
-            'birthDate': 8,
-            'fullName': 6,
-            'location': 5,
+            'ipAddress': 18,
+            'childInfo': 20,
+            'medicalInfo': 18,
+            
+            # Medium-risk indicators
+            'address': 12,
+            'zipCode': 10,
+            'birthDate': 10,
+            'school': 8,
+            'workplace': 8,
+            'location': 7,
+            'travelPlans': 9,
+            'financialInfo': 12,
+            'vehicleInfo': 6,
+            
+            # Low-risk indicators
             'age': 3,
-            'personalInfo': 2
+            'familyMember': 4,
+            'dailyRoutine': 5,
+            'petInfo': 4,
+            'relationship': 3
         }
 
         self.platform_multipliers = {
@@ -125,22 +139,31 @@ class RiskModel:
                 'affectedCount': len(findings_by_type['phone'])
             })
 
-        if 'ssn' in findings_by_type:
+        if 'ipAddress' in findings_by_type:
             recommendations.append({
-                'title': 'URGENT: Remove SSN Information',
-                'description': 'Social Security Number patterns detected. Remove immediately to prevent identity theft.',
+                'title': 'URGENT: Remove IP Address',
+                'description': 'IP address detected in your content. Remove immediately to prevent tracking and targeted attacks.',
                 'priority': 'high',
-                'category': 'identity',
-                'affectedCount': len(findings_by_type['ssn'])
+                'category': 'technical',
+                'affectedCount': len(findings_by_type['ipAddress'])
             })
 
-        if 'creditCard' in findings_by_type:
+        if 'childInfo' in findings_by_type:
             recommendations.append({
-                'title': 'URGENT: Remove Financial Information',
-                'description': 'Credit card number patterns found. Delete immediately and monitor your accounts.',
+                'title': 'URGENT: Remove Child Identifying Information',
+                'description': 'Information about children detected. Remove immediately to protect their privacy and safety.',
                 'priority': 'high',
-                'category': 'financial',
-                'affectedCount': len(findings_by_type['creditCard'])
+                'category': 'identity',
+                'affectedCount': len(findings_by_type['childInfo'])
+            })
+
+        if 'medicalInfo' in findings_by_type:
+            recommendations.append({
+                'title': 'Remove Medical Information',
+                'description': 'Medical or health information detected. Consider removing to protect your privacy and prevent discrimination.',
+                'priority': 'high',
+                'category': 'health',
+                'affectedCount': len(findings_by_type['medicalInfo'])
             })
 
         # medium-priority recommendations
@@ -162,13 +185,86 @@ class RiskModel:
                 'affectedCount': len(findings_by_type['birthDate'])
             })
 
-        if 'fullName' in findings_by_type:
+        if 'school' in findings_by_type:
             recommendations.append({
-                'title': 'Review Full Name Visibility',
-                'description': 'Full names detected in content. Consider using first name only or initials in public posts.',
+                'title': 'Remove School Information',
+                'description': 'School or university information detected. This can be used for social engineering or stalking.',
                 'priority': 'medium',
                 'category': 'identity',
-                'affectedCount': len(findings_by_type['fullName'])
+                'affectedCount': len(findings_by_type['school'])
+            })
+
+        if 'workplace' in findings_by_type:
+            recommendations.append({
+                'title': 'Limit Workplace Details',
+                'description': 'Workplace information found. Consider removing or being less specific about your employer.',
+                'priority': 'medium',
+                'category': 'identity',
+                'affectedCount': len(findings_by_type['workplace'])
+            })
+
+        if 'travelPlans' in findings_by_type:
+            recommendations.append({
+                'title': 'Remove Travel Plans',
+                'description': 'Travel or absence information detected. Never post about being away from home publicly.',
+                'priority': 'medium',
+                'category': 'safety',
+                'affectedCount': len(findings_by_type['travelPlans'])
+            })
+
+        if 'financialInfo' in findings_by_type:
+            recommendations.append({
+                'title': 'Remove Financial Information',
+                'description': 'Salary or income information detected. Avoid sharing financial details publicly.',
+                'priority': 'medium',
+                'category': 'financial',
+                'affectedCount': len(findings_by_type['financialInfo'])
+            })
+
+        if 'zipCode' in findings_by_type:
+            recommendations.append({
+                'title': 'Hide Zip Code',
+                'description': 'Zip code detected. Combined with other info, this can reveal your exact location.',
+                'priority': 'medium',
+                'category': 'location',
+                'affectedCount': len(findings_by_type['zipCode'])
+            })
+
+        if 'vehicleInfo' in findings_by_type:
+            recommendations.append({
+                'title': 'Limit Vehicle Information',
+                'description': 'Vehicle details found. This information can be used to identify or track you.',
+                'priority': 'medium',
+                'category': 'personal',
+                'affectedCount': len(findings_by_type['vehicleInfo'])
+            })
+
+        # low-priority recommendations
+        if 'familyMember' in findings_by_type:
+            recommendations.append({
+                'title': 'Limit Family Member Names',
+                'description': 'Family member names detected. These are commonly used in security questions.',
+                'priority': 'low',
+                'category': 'personal',
+                'affectedCount': len(findings_by_type['familyMember'])
+            })
+
+        if 'petInfo' in findings_by_type:
+            recommendations.append({
+                'title': 'Hide Pet Names',
+                'description': 'Pet names detected. These are frequently used as security question answers.',
+                'priority': 'low',
+                'category': 'personal',
+                'affectedCount': len(findings_by_type['petInfo'])
+            })
+
+        if 'dailyRoutine' in findings_by_type:
+            recommendations.append({
+                'title': 'Be Careful with Routine Information',
+                'description': 'Daily routine patterns detected. Avoid sharing predictable schedules publicly.',
+                'priority': 'low',
+                'category': 'safety',
+                'affectedCount': len(findings_by_type['dailyRoutine'])
             })
 
         # general recommendations based on overall risk
