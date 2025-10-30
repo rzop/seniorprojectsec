@@ -475,9 +475,9 @@ function ApifyInstagramTestPage() {
         
         <h4 style={{ color: '#15803d' }}>What This Analyzes</h4>
         <ul style={{ color: '#166534' }}>
-          <li><strong>High Risk:</strong> Email addresses, phone numbers, SSN, credit cards, addresses</li>
-          <li><strong>Medium Risk:</strong> Birth dates, full names, locations, personal details</li>
-          <li><strong>Low Risk:</strong> Age mentions, sensitive keywords, personal patterns</li>
+          <li><strong>High Risk:</strong> Email addresses, phone numbers, IP addresses, child information, medical details</li>
+          <li><strong>Medium Risk:</strong> Addresses, zip codes, birth dates, schools, workplaces, locations, travel plans, financial info, vehicle details</li>
+          <li><strong>Low Risk:</strong> Age, family member names, daily routines, pet names, relationship information</li>
         </ul>
         
         <h4 style={{ color: '#15803d' }}>Secure Backend Analysis</h4>
