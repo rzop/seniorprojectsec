@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import phishingBg from './assets/phishing-bg.png';
-import safeBg from './assets/safe-bg.jpg';
+import normalBackground from './assets/backgroundgif.gif';
+import phishingBg from './assets/cybersecurityRed.gif';
+import safeBg from './assets/lock-green.gif';
 
 
 
@@ -52,22 +53,27 @@ const PhishingTrainer = () => {
   };
 
   const getBackgroundStyle = () => {
-  if (result && result.label === 'phishing') {
-    return {
-      backgroundImage: `url(${phishingBg})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      transition: 'background 0.5s ease-in-out',
-    };
-  }
-  return {
-    backgroundImage: `url(${safeBg})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      transition: 'background 0.5s ease-in-out',
+  const baseStyle = {
+    height: '100vh',             // full viewport height
+    width: '100vw',              // full viewport width
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    transition: 'background 0.5s ease-in-out',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    overflowY: 'auto',           // so content can scroll if needed
   };
+
+  if (result && result.label === 'phishing') {
+    return { ...baseStyle, backgroundImage: `url(${phishingBg})` };
+  } else if (result && result.label === 'legit') {
+    return { ...baseStyle, backgroundImage: `url(${safeBg})` };
+  } else {
+    return { ...baseStyle, backgroundImage: `url(${normalBackground})` };
+  }
 };
 
 

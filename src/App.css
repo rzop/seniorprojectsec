@@ -103,13 +103,29 @@ button:hover {
   color: white;
 }
 
-/* Phishing Trainer Styles */
+/* Fullscreen background for phishing trainer */
 .phishing-trainer {
-  max-width: 1000px;
-  margin: 0 auto;
+  min-height: 100vh;          /* fills the whole viewport vertically */
+  width: 100vw;               /* fills the width of the viewport */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 2rem;
-  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
 .trainer-header {
   text-align: center;
