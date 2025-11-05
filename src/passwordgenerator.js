@@ -8,7 +8,10 @@ function PasswordGenerator() {
   const [password, setPassword] = useState('');
   const [length, setLength] = useState(16);
   const [copied, setCopied] = useState(false);
-  
+  const [generationType, setGenerationType] = useState('random');
+  const [isChecking, setIsChecking] = useState(false);
+  const [breachStatus, setBreachStatus] = useState(null);
+
   // I used my blum blum algorithm I previously implemented in CIS 4362 but it's converted into javascript since I originally wrote the code in python. The core logic is similar.
   const gcd = (a, b) => {
     a = BigInt(a);
@@ -45,7 +48,77 @@ function PasswordGenerator() {
     return bits;
   };
   
-  const generatePassword = () => {
+  const getRandomWord = async () => {
+    try {
+      const response = await fetch('https://random-word-api.herokuapp.com/word');
+      const words = await response.json();
+      return words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    }
+    catch (error) {
+      throw error;
+    }
+  };
+  
+  const checkPasswordBreach = async (pwd) => {
+    const sha1 = async (message) => {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex.toUpperCase();
+    };
+    
+    try {
+      const hash = await sha1(pwd);
+      const prefix = hash.substring(0, 5);
+      const suffix = hash.substring(5);
+      
+      const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+      const text = await response.text();
+      
+      const lines = text.split('\n');
+      const match = lines.find(line => {
+        const [hashSuffix] = line.split(':');
+        return hashSuffix === suffix;
+      });
+      
+      return !match;
+    }
+    catch (error) {
+      console.error('Error checking breach status:', error);
+      return null;
+    }
+  };
+  
+  const generateMemorablePassword = async () => {
+    setIsChecking(true);
+    setBreachStatus(null);
+    
+    const numWords = 2 + Math.floor(Math.random() * 2);
+    const words = [];
+    
+    for (let i = 0; i < numWords; i++) {
+      const word = await getRandomWord();
+      words.push(word);
+    }
+    
+    const numbers = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    const symbols = '!@#$%^&*'[Math.floor(Math.random() * 8)];
+    
+    const memorablePassword = words.join('') + numbers + symbols;
+    
+    const isSafe = await checkPasswordBreach(memorablePassword);
+    
+    setPassword(memorablePassword);
+    setBreachStatus(isSafe);
+    setIsChecking(false);
+    setCopied(false);
+  };
+  
+  const generateRandomPassword = async () => {
+    setIsChecking(true);
+    setBreachStatus(null);
+    
     const p = 137679308119764668012999113161163554727553694504328845318802723367369176164981055511147150883267010990344885242152698121937077633336968790709954826243699948640899677859242273424500151846562685398985300570776214991989575265452198256123894255426204884076079520571766577667533227039850979273554872588180953495267n;
     const q = 96321018355314307613737874016618535544886546186823045508108202102267017197052122170211567100044801244293854643091561147907078160268959544580191138605623179835132904091073638522708259748879211885165468771982929390435189828156127035555552485085841566152567436516238897838503548330060366133313829775788275575971n;
     
@@ -59,8 +132,21 @@ function PasswordGenerator() {
       newPassword += charset[index];
     }
     
+    const isSafe = await checkPasswordBreach(newPassword);
+    
     setPassword(newPassword);
+    setBreachStatus(isSafe);
+    setIsChecking(false);
     setCopied(false);
+  };
+  
+  const generatePassword = () => {
+    if (generationType === 'memorable') {
+      generateMemorablePassword();
+    }
+    else {
+      generateRandomPassword();
+    }
   };
   
   const copyToClipboard = () => {
@@ -81,7 +167,7 @@ function PasswordGenerator() {
         </button>
         <h1>Password Generator</h1>
         <p className="subtitle">
-          Cryptographically secure passwords using Blum Blum Shub PRNG
+          Generate secure passwords with breach checking
         </p>
       </header>
       <main className="App-main">
@@ -95,42 +181,66 @@ function PasswordGenerator() {
           textAlign: 'center'
         }}>
           <div style={{ margin: '20px 0' }}>
-            <label style={{ 
-              fontSize: '1.1rem',
-              color: '#1e2a38',
-              fontWeight: 'bold'
-            }}>
-              Password Length: {length}
+            <label style={{ marginRight: '20px' }}>
               <input
-                type="range"
-                min="8"
-                max="128"
-                value={length}
-                onChange={(e) => setLength(Number(e.target.value))}
-                style={{ 
-                  marginLeft: '10px', 
-                  width: '200px',
-                  display: 'block',
-                  margin: '10px auto'
-                }}
+                type="radio"
+                value="random"
+                checked={generationType === 'random'}
+                onChange={(e) => setGenerationType(e.target.value)}
               />
+              Random (Most Secure)
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="memorable"
+                checked={generationType === 'memorable'}
+                onChange={(e) => setGenerationType(e.target.value)}
+              />
+              Memorable (Easier to Remember)
             </label>
           </div>
           
+          {generationType === 'random' && (
+            <div style={{ margin: '20px 0' }}>
+              <label style={{ 
+                fontSize: '1.1rem',
+                color: '#1e2a38',
+                fontWeight: 'bold'
+              }}>
+                Password Length: {length}
+                <input
+                  type="range"
+                  min="8"
+                  max="64"
+                  value={length}
+                  onChange={(e) => setLength(Number(e.target.value))}
+                  style={{ 
+                    marginLeft: '10px', 
+                    width: '200px',
+                    display: 'block',
+                    margin: '10px auto'
+                  }}
+                />
+              </label>
+            </div>
+          )}
+          
           <button 
             onClick={generatePassword}
+            disabled={isChecking}
             style={{
               padding: '0.75rem 2rem',
               fontSize: '1rem',
-              backgroundColor: '#1e2a38',
+              backgroundColor: isChecking ? '#95a5a6' : '#1e2a38',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              cursor: 'pointer',
+              cursor: isChecking ? 'not-allowed' : 'pointer',
               transition: 'background-color 0.3s'
             }}
           >
-            Generate Password
+            {isChecking ? 'Generating & Checking...' : 'Generate Password'}
           </button>
         </div>
         
@@ -141,7 +251,7 @@ function PasswordGenerator() {
             borderRadius: '12px',
             margin: '2rem 0',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            borderTop: '4px solid #27ae60',
+            borderTop: `4px solid ${breachStatus === false ? '#e74c3c' : '#27ae60'}`,
             textAlign: 'center'
           }}>
             <h3 style={{ 
@@ -163,6 +273,21 @@ function PasswordGenerator() {
             }}>
               {password}
             </div>
+            
+            {breachStatus !== null && (
+              <div style={{
+                padding: '10px',
+                marginBottom: '15px',
+                borderRadius: '8px',
+                backgroundColor: breachStatus ? '#d4edda' : '#f8d7da',
+                color: breachStatus ? '#155724' : '#721c24'
+              }}>
+                {breachStatus 
+                  ? 'Password NOT found in any known data breaches - Safe to use!'
+                  : 'This password exists in breach databases - Generating a new one is recommended'}
+              </div>
+            )}
+            
             <button 
               onClick={copyToClipboard}
               style={{
@@ -194,19 +319,24 @@ function PasswordGenerator() {
             color: '#f0f0f0',
             textAlign: 'center'
           }}>
-            About Blum Blum Shub
+            What Makes a Strong Password?
           </h3>
-          <p style={{
+          <ul style={{
             color: '#d0d0d0',
-            lineHeight: '1.6',
+            lineHeight: '1.8',
             margin: '0',
-            textAlign: 'center'
+            textAlign: 'left',
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
           }}>
-            This generator uses the Blum Blum Shub algorithm to generate pseudo random 
-            and safe passwords. It's one of the forms of pseudorandom number generator 
-            that is provably cryptographically secure and it's based on the difficulty 
-            of factoring large composite numbers.
-          </p>
+            <li><strong>Length matters most:</strong> 16+ characters recommended by NIST</li>
+            <li><strong>Uniqueness:</strong> Never reuse passwords across sites</li>
+            <li><strong>Unpredictability:</strong> Avoid personal info, common words, or patterns</li>
+            <li><strong>Memorable option:</strong> Combines random words with numbers and symbols</li>
+            <li><strong>Random option:</strong> Uses cryptographically secure randomization for maximum security</li>
+            <li><strong>Breach checking:</strong> Automatically verified against known compromised passwords</li>
+          </ul>
         </section>
         
         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
@@ -224,7 +354,7 @@ function PasswordGenerator() {
               transition: 'background-color 0.3s'
             }}
           >
-            🔍 Go to Password Breach Checker
+            Go to Password Breach Checker
           </button>
         </div>
       </main>
