@@ -388,3 +388,362 @@ html, body, #root {
     width: 100%;
   }
 }
+
+/* Info Pages Styles */
+.info-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.info-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #1e2a38 0%, #34495e 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+.info-header .back-button {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.info-header .back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-2px);
+}
+
+.info-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+}
+
+.info-header p {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  border-left: 4px solid #1e2a38;
+}
+
+.stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  color: #1e2a38;
+  font-weight: bold;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.single-tool-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.single-tool-container .tool-card {
+  max-width: 600px;
+  width: 100%;
+}
+
+.tool-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  border-color: #1e2a38;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tool-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.tool-card h3 {
+  margin: 0 0 1rem 0;
+  color: #1e2a38;
+  font-size: 1.5rem;
+}
+
+.tool-card p {
+  margin-bottom: 1.5rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.tool-card ul {
+  text-align: left;
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.tool-card li {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.tool-button {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.tool-button.primary {
+  background: #1e2a38;
+  color: white;
+}
+
+.tool-button.primary:hover {
+  background: #34495e;
+  transform: translateY(-2px);
+}
+
+.tool-button.large {
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.tip-card {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border-top: 4px solid #1e2a38;
+}
+
+.tip-card h4 {
+  margin: 0 0 1rem 0;
+  color: #1e2a38;
+  font-size: 1.1rem;
+}
+
+.tip-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.warning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.warning-card {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.warning-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.warning-card h4 {
+  margin: 0 0 1rem 0;
+  color: #856404;
+  font-size: 1.1rem;
+}
+
+.warning-card p {
+  margin: 0;
+  color: #856404;
+  font-size: 0.95rem;
+}
+
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.risk-card {
+  background: #ffe6e6;
+  border: 1px solid #ffcccc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.risk-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.risk-card h4 {
+  margin: 0 0 1rem 0;
+  color: #c82333;
+  font-size: 1.1rem;
+}
+
+.risk-card p {
+  margin: 0;
+  color: #721c24;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.trainer-preview, .analyzer-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.trainer-description {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+.disclaimer {
+  margin-top: 3rem;
+}
+
+.disclaimer-card {
+  background: #e7f3ff;
+  border: 1px solid #b8daff;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.disclaimer-card h3 {
+  margin: 0 0 1rem 0;
+  color: #0c5460;
+}
+
+.disclaimer-card p {
+  margin: 0;
+  color: #0c5460;
+  line-height: 1.6;
+}
+
+/* Responsive Design for Info Pages */
+@media (max-width: 768px) {
+  .info-page {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .info-header {
+    padding: 2rem 1rem;
+  }
+  
+  .info-header .back-button {
+    position: static;
+    margin-bottom: 1rem;
+  }
+  
+  .info-header h1 {
+    font-size: 2rem;
+  }
+  
+  .stats-grid, .tools-grid, .tips-grid, .warning-grid, .risk-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .tool-card {
+    padding: 1.5rem;
+  }
+  
+  .features-list {
+    max-width: 100%;
+  }
+}

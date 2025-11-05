@@ -1,11 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
 import UnifiedSocialMediaAnalyzer from './UnifiedSocialMediaAnalyzer';
 import PasswordChecker from './passwordchecker';
 import PasswordGenerator from './passwordgenerator';
+import PasswordInfo from './PasswordInfo';
+import PhishingInfo from './PhishingInfo';
+import SocialMediaInfo from './SocialMediaInfo';
 import backgroundGif from './assets/backgroundgif.gif';
+
+// Component to scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 
 function Home() {
@@ -33,21 +47,21 @@ function Home() {
             <h1>🔑</h1>
             <h2>Password Checker</h2>
             <p>Test your password strength and generate secure ones.</p>
-            <button onClick={() => navigate('/password-checker')}>Go</button>
+            <button onClick={() => navigate('/password-info')}>Go</button>
           </div>
 
           <div className="card">
             <h1>📧</h1>
             <h2>Phishing Training</h2>
             <p>Learn how to spot suspicious emails through practice.</p>
-            <button onClick={() => navigate('/phishing-trainer')}>Go</button>
+            <button onClick={() => navigate('/phishing-info')}>Go</button>
           </div>
 
           <div className="card">
             <h1>📱📘</h1>
             <h2>Social Media Analyzer</h2>
             <p>Analyze Instagram profiles and Facebook pages for privacy exposure.</p>
-            <button onClick={() => navigate('/social-media-analyzer')}>Go</button>
+            <button onClick={() => navigate('/social-media-info')}>Go</button>
           </div>
         </section>
       </main>
@@ -62,11 +76,19 @@ function Home() {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        
+        {/* Info Pages */}
+        <Route path="/password-info" element={<PasswordInfo />} />
+        <Route path="/phishing-info" element={<PhishingInfo />} />
+        <Route path="/social-media-info" element={<SocialMediaInfo />} />
+        
+        {/* Tool Pages */}
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/social-media-analyzer" element={<UnifiedSocialMediaAnalyzer />} />
-	      <Route path="/password-generator" element={<PasswordGenerator />} />
+        <Route path="/password-generator" element={<PasswordGenerator />} />
         <Route path="/password-checker" element={<PasswordChecker />} />
       </Routes>
     </Router>
