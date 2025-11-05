@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
 
 function UnifiedSocialMediaAnalyzer() {
   const navigate = useNavigate();
@@ -187,7 +188,7 @@ function UnifiedSocialMediaAnalyzer() {
   const currentServiceStatus = serviceStatus[selectedPlatform];
 
   return (
-    <div>
+    <div className="App">
       {/* Back to Home Button */}
       <button 
         onClick={() => navigate('/')} 
@@ -195,143 +196,254 @@ function UnifiedSocialMediaAnalyzer() {
           position: 'absolute',
           top: '20px',
           left: '20px',
-          backgroundColor: '#6b7280',
+          backgroundColor: 'rgba(255, 255, 255, 0.15)',
+          backdropFilter: 'blur(10px)',
           color: 'white',
-          border: 'none',
+          border: '2px solid rgba(255, 255, 255, 0.3)',
           padding: '10px 20px',
-          borderRadius: '6px',
+          borderRadius: '8px',
           cursor: 'pointer',
           fontSize: '14px',
-          fontWeight: 'bold',
-          zIndex: 1000
+          fontWeight: '600',
+          zIndex: 1000,
+          transition: 'all 0.3s ease'
         }}
+        onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.25)'}
+        onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
       >
         ← Back to Home
       </button>
       
-      {/* Header */}
+      {/* Main Content Container */}
       <div style={{
-        backgroundColor: '#1e2a38',
-        color: 'white',
+        maxWidth: '900px',
+        margin: '0 auto',
         padding: '20px',
-        textAlign: 'center',
-        marginBottom: '20px'
+        width: '100%'
       }}>
-        <h1>Social Media Privacy Analyzer</h1>
-        <p>Real-time PII detection using secure backend analysis</p>
-        
-        {/* Platform Selector */}
-        <div style={{ marginTop: '20px' }}>
-          <label style={{ marginRight: '10px', fontSize: '16px' }}>Select Platform:</label>
-          <select
-            value={selectedPlatform}
-            onChange={(e) => {
-              setSelectedPlatform(e.target.value);
-              setInputValue('');
-              setTestResults(null);
-            }}
-            style={{
-              padding: '8px 12px',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-              fontSize: '16px',
-              backgroundColor: 'white',
-              color: '#333'
-            }}
-          >
-            <option value="instagram">Instagram</option>
-            <option value="facebook">Facebook</option>
-          </select>
-        </div>
-
-        {currentServiceStatus && (
-          <div style={{ fontSize: '14px', opacity: 0.8, marginTop: '10px' }}>
-            {currentServiceStatus.valid ? (
-              <span style={{ color: '#22c55e' }}>✅ {platformInfo.name} Service Ready</span>
-            ) : (
-              <span style={{ color: '#ef4444' }}>❌ {platformInfo.name} Service Unavailable: {currentServiceStatus.error}</span>
-            )}
-          </div>
-        )}
-      </div>
-      
-      {/* Configuration Panel */}
-      <div style={{
-        backgroundColor: '#f0f9ff',
-        padding: '20px',
-        marginBottom: '20px',
-        borderRadius: '8px',
-        border: '1px solid #0ea5e9'
-      }}>
-        <h3 style={{ marginTop: 0, color: '#0c4a6e' }}>
-          {platformInfo.emoji} {platformInfo.name} Analysis
-        </h3>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            {platformInfo.inputLabel}
-          </label>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder={platformInfo.placeholder}
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #0ea5e9',
-              borderRadius: '4px',
-              fontSize: '14px'
-            }}
-          />
-        </div>
-        
-        <button
-          onClick={runPIIAnalysisTest}
-          disabled={isAnalyzing || !currentServiceStatus?.valid}
-          style={{
-            backgroundColor: isAnalyzing ? '#6b7280' : '#0ea5e9',
-            color: 'white',
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            cursor: isAnalyzing ? 'not-allowed' : 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            marginRight: '10px'
-          }}
-        >
-          {isAnalyzing ? '🔄 Analyzing...' : `🔍 Analyze ${platformInfo.name} ${selectedPlatform === 'instagram' ? 'Profile' : 'Page'}`}
-        </button>
-        
-        <button
-          onClick={checkServiceStatus}
-          style={{
-            backgroundColor: '#6b7280',
-            color: 'white',
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '14px'
-          }}
-        >
-          🔄 Check Service Status
-        </button>
-      </div>
-
-      {/* Results Section */}
-      {testResults && (
+        {/* Header */}
         <div style={{
-          backgroundColor: '#f8fafc',
-          padding: '20px',
-          borderRadius: '8px',
-          border: '1px solid #e2e8f0',
-          marginBottom: '20px'
+          backgroundColor: 'rgba(30, 42, 56, 0.95)',
+          backdropFilter: 'blur(10px)',
+          color: 'white',
+          padding: '40px 30px',
+          textAlign: 'center',
+          marginBottom: '30px',
+          borderRadius: '12px',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
         }}>
-          {testResults.error ? (
-            <div>
-              <h3 style={{ color: '#dc2626', marginTop: 0 }}>❌ Analysis Failed</h3>
-              <p style={{ color: '#dc2626', marginBottom: '20px' }}>{testResults.error}</p>
+          <h1 style={{ margin: '0 0 10px 0', fontSize: '2.2rem', fontWeight: '700' }}>
+            Social Media Privacy Analyzer
+          </h1>
+          <p style={{ margin: '0 0 25px 0', fontSize: '1.05rem', opacity: 0.9 }}>
+            Real-time PII detection using secure backend analysis
+          </p>
+          
+          {/* Platform Selector */}
+          <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+            <label style={{ 
+              marginRight: '12px', 
+              fontSize: '16px',
+              fontWeight: '500'
+            }}>
+              Select Platform:
+            </label>
+            <select
+              value={selectedPlatform}
+              onChange={(e) => {
+                setSelectedPlatform(e.target.value);
+                setInputValue('');
+                setTestResults(null);
+              }}
+              style={{
+                padding: '10px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                fontSize: '15px',
+                backgroundColor: 'white',
+                color: '#333',
+                cursor: 'pointer',
+                fontWeight: '500',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+              }}
+            >
+              <option value="instagram">📷 Instagram</option>
+              <option value="facebook">📘 Facebook</option>
+            </select>
+          </div>
+
+          {currentServiceStatus && (
+            <div style={{ 
+              fontSize: '14px', 
+              marginTop: '15px',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              backgroundColor: currentServiceStatus.valid ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+              display: 'inline-block'
+            }}>
+              {currentServiceStatus.valid ? (
+                <span style={{ color: '#22c55e', fontWeight: '500' }}>
+                  ✅ {platformInfo.name} Service Ready
+                </span>
+              ) : (
+                <span style={{ color: '#ef4444', fontWeight: '500' }}>
+                  ❌ {platformInfo.name} Service Unavailable
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+        
+        {/* Configuration Panel */}
+        <div style={{
+          backgroundColor: 'rgba(240, 249, 255, 0.95)',
+          backdropFilter: 'blur(10px)',
+          padding: '35px 30px',
+          marginBottom: '30px',
+          borderRadius: '12px',
+          border: 'none',
+          textAlign: 'center',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+        }}>
+          <h3 style={{ 
+            marginTop: 0, 
+            marginBottom: '25px',
+            color: '#0c4a6e',
+            fontSize: '1.4rem',
+            fontWeight: '600'
+          }}>
+            🔍 {platformInfo.name} Analysis
+          </h3>
+          
+          <div style={{ 
+            marginBottom: '25px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '12px', 
+              fontWeight: '600',
+              textAlign: 'center',
+              color: '#0c4a6e',
+              fontSize: '15px'
+            }}>
+              {platformInfo.inputLabel}
+            </label>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder={platformInfo.placeholder}
+              style={{
+                width: '100%',
+                maxWidth: '600px',
+                padding: '14px 18px',
+                border: '2px solid #0ea5e9',
+                borderRadius: '10px',
+                fontSize: '15px',
+                textAlign: 'center',
+                transition: 'all 0.3s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => e.target.style.boxShadow = '0 0 0 3px rgba(14, 165, 233, 0.2)'}
+              onBlur={(e) => e.target.style.boxShadow = 'none'}
+            />
+          </div>
+          
+          <div style={{ 
+            display: 'flex', 
+            gap: '12px', 
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <button
+              onClick={runPIIAnalysisTest}
+              disabled={isAnalyzing || !currentServiceStatus?.valid}
+              style={{
+                backgroundColor: isAnalyzing ? '#9ca3af' : '#0ea5e9',
+                color: 'white',
+                border: 'none',
+                padding: '14px 28px',
+                borderRadius: '10px',
+                cursor: isAnalyzing ? 'not-allowed' : 'pointer',
+                fontSize: '15px',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                boxShadow: isAnalyzing ? 'none' : '0 4px 12px rgba(14, 165, 233, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                if (!isAnalyzing && currentServiceStatus?.valid) {
+                  e.target.style.backgroundColor = '#0284c7';
+                  e.target.style.transform = 'translateY(-2px)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isAnalyzing && currentServiceStatus?.valid) {
+                  e.target.style.backgroundColor = '#0ea5e9';
+                  e.target.style.transform = 'translateY(0)';
+                }
+              }}
+            >
+              {isAnalyzing ? '🔄 Analyzing...' : `🔍 Analyze ${platformInfo.name}`}
+            </button>
+            
+            <button
+              onClick={checkServiceStatus}
+              style={{
+                backgroundColor: 'rgba(107, 114, 128, 0.9)',
+                color: 'white',
+                border: 'none',
+                padding: '14px 24px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#6b7280';
+                e.target.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'rgba(107, 114, 128, 0.9)';
+                e.target.style.transform = 'translateY(0)';
+              }}
+            >
+              🔄 Refresh Status
+            </button>
+          </div>
+        </div>
+
+        {/* Results Section */}
+        {testResults && (
+          <div style={{
+            backgroundColor: 'rgba(248, 250, 252, 0.95)',
+            backdropFilter: 'blur(10px)',
+            padding: '30px',
+            borderRadius: '12px',
+            border: 'none',
+            marginBottom: '30px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+          }}>
+            {testResults.error ? (
+              <div>
+                <h3 style={{ 
+                  color: '#dc2626', 
+                  marginTop: 0,
+                  fontSize: '1.4rem',
+                  fontWeight: '600'
+                }}>
+                  ❌ Analysis Failed
+                </h3>
+                <p style={{ 
+                  color: '#dc2626', 
+                  marginBottom: '25px',
+                  fontSize: '15px'
+                }}>
+                  {testResults.error}
+                </p>
               
               {testResults.troubleshooting && (
                 <div>
@@ -357,219 +469,396 @@ function UnifiedSocialMediaAnalyzer() {
                 </div>
               )}
             </div>
-          ) : (
-            <div>
-              <h3 style={{ color: '#16a34a', marginTop: 0 }}>✅ Analysis Complete</h3>
-              
-              {/* Risk Score */}
-              <div style={{
-                backgroundColor: 'white',
-                padding: '20px',
-                borderRadius: '8px',
-                border: '2px solid #e2e8f0',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                <div style={{ fontSize: '48px', marginBottom: '10px' }}>
-                  {getRiskEmoji(testResults.riskScore)}
-                </div>
-                <h2 style={{ 
-                  margin: '0 0 10px 0',
-                  color: getRiskColor(testResults.riskScore)
+            ) : (
+              <div>
+                <h3 style={{ 
+                  color: '#16a34a', 
+                  marginTop: 0,
+                  fontSize: '1.4rem',
+                  fontWeight: '600',
+                  marginBottom: '25px'
                 }}>
-                  Risk Score: {testResults.riskScore}/100
-                </h2>
-                <p style={{ 
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: getRiskColor(testResults.riskScore),
-                  margin: 0
-                }}>
-                  {testResults.riskLevel.toUpperCase()} RISK
-                </p>
-              </div>
-
-              {/* Profile Stats */}
-              {testResults.profileStats && (
+                  ✅ Analysis Complete
+                </h3>
+                
+                {/* Risk Score */}
                 <div style={{
                   backgroundColor: 'white',
-                  padding: '15px',
-                  borderRadius: '6px',
-                  marginBottom: '20px'
+                  padding: '35px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  marginBottom: '25px',
+                  textAlign: 'center',
+                  boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
                 }}>
-                  <h4 style={{ marginTop: 0, color: '#374151' }}>Profile Analysis Summary</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#0ea5e9' }}>
-                        {testResults.profileStats.postsAnalyzed}
+                  <div style={{ fontSize: '56px', marginBottom: '15px' }}>
+                    {getRiskEmoji(testResults.riskScore)}
+                  </div>
+                  <h2 style={{ 
+                    margin: '0 0 12px 0',
+                    color: getRiskColor(testResults.riskScore),
+                    fontSize: '2rem',
+                    fontWeight: '700'
+                  }}>
+                    Risk Score: {testResults.riskScore}/100
+                  </h2>
+                  <p style={{ 
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    color: getRiskColor(testResults.riskScore),
+                    margin: 0,
+                    padding: '8px 20px',
+                    borderRadius: '20px',
+                    backgroundColor: `${getRiskColor(testResults.riskScore)}15`,
+                    display: 'inline-block'
+                  }}>
+                    {testResults.riskLevel.toUpperCase()} RISK
+                  </p>
+                </div>
+
+                {/* Profile Stats */}
+                {testResults.profileStats && (
+                  <div style={{
+                    backgroundColor: 'white',
+                    padding: '25px',
+                    borderRadius: '12px',
+                    marginBottom: '25px',
+                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <h4 style={{ 
+                      marginTop: 0, 
+                      marginBottom: '20px',
+                      color: '#374151',
+                      fontSize: '1.15rem',
+                      fontWeight: '600'
+                    }}>
+                      📊 Profile Analysis Summary
+                    </h4>
+                    <div style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
+                      gap: '20px' 
+                    }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '28px', 
+                          fontWeight: '700', 
+                          color: '#0ea5e9',
+                          marginBottom: '6px'
+                        }}>
+                          {testResults.profileStats.postsAnalyzed}
+                        </div>
+                        <div style={{ 
+                          fontSize: '13px', 
+                          color: '#6b7280',
+                          fontWeight: '500'
+                        }}>
+                          Posts Analyzed
+                        </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280' }}>Posts Analyzed</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#0ea5e9' }}>
-                        {testResults.profileStats.commentsAnalyzed}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '28px', 
+                          fontWeight: '700', 
+                          color: '#0ea5e9',
+                          marginBottom: '6px'
+                        }}>
+                          {testResults.profileStats.commentsAnalyzed}
+                        </div>
+                        <div style={{ 
+                          fontSize: '13px', 
+                          color: '#6b7280',
+                          fontWeight: '500'
+                        }}>
+                          Comments Analyzed
+                        </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280' }}>Comments Analyzed</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#0ea5e9' }}>
-                        {testResults.totalFindings}
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '28px', 
+                          fontWeight: '700', 
+                          color: '#0ea5e9',
+                          marginBottom: '6px'
+                        }}>
+                          {testResults.totalFindings}
+                        </div>
+                        <div style={{ 
+                          fontSize: '13px', 
+                          color: '#6b7280',
+                          fontWeight: '500'
+                        }}>
+                          PII Findings
+                        </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280' }}>PII Findings</div>
-                    </div>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#0ea5e9' }}>
-                        {Math.round(testResults.profileStats.totalTextLength / 1000)}k
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '28px', 
+                          fontWeight: '700', 
+                          color: '#0ea5e9',
+                          marginBottom: '6px'
+                        }}>
+                          {Math.round(testResults.profileStats.totalTextLength / 1000)}k
+                        </div>
+                        <div style={{ 
+                          fontSize: '13px', 
+                          color: '#6b7280',
+                          fontWeight: '500'
+                        }}>
+                          Characters Analyzed
+                        </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: '#6b7280' }}>Characters Analyzed</div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* PII Findings */}
-              {testResults.findings && testResults.findings.length > 0 && (
-                <div style={{
-                  backgroundColor: 'white',
-                  padding: '15px',
-                  borderRadius: '6px',
-                  marginBottom: '20px'
-                }}>
-                  <h4 style={{ marginTop: 0, color: '#374151' }}>🔍 PII Findings ({testResults.findings.length})</h4>
-                  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                    {testResults.findings.map((finding, index) => (
-                      <div key={index} style={{
-                        padding: '10px',
-                        marginBottom: '10px',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '4px',
-                        backgroundColor: '#f8fafc'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
-                          <span style={{ fontWeight: 'bold', color: '#374151' }}>
-                            {finding.type} ({finding.severity})
-                          </span>
-                          <span style={{
-                            backgroundColor: getSeverityColor(finding.severity),
-                            color: 'white',
-                            padding: '2px 8px',
-                            borderRadius: '12px',
-                            fontSize: '12px',
-                            fontWeight: 'bold'
+                {/* PII Findings */}
+                {testResults.findings && testResults.findings.length > 0 && (
+                  <div style={{
+                    backgroundColor: 'white',
+                    padding: '25px',
+                    borderRadius: '12px',
+                    marginBottom: '25px',
+                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <h4 style={{ 
+                      marginTop: 0, 
+                      marginBottom: '20px',
+                      color: '#374151',
+                      fontSize: '1.15rem',
+                      fontWeight: '600'
+                    }}>
+                      🔍 PII Findings ({testResults.findings.length})
+                    </h4>
+                    <div style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
+                      {testResults.findings.map((finding, index) => (
+                        <div key={index} style={{
+                          padding: '16px',
+                          marginBottom: '12px',
+                          border: 'none',
+                          borderRadius: '10px',
+                          backgroundColor: '#f8fafc',
+                          boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)'
+                        }}>
+                          <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center', 
+                            marginBottom: '10px',
+                            flexWrap: 'wrap',
+                            gap: '8px'
                           }}>
-                            {finding.confidence}% confidence
-                          </span>
-                        </div>
-                        <div style={{ color: '#6b7280', fontSize: '14px' }}>
-                          <strong>Found:</strong> "{finding.value}"
-                        </div>
-                        {finding.context && (
-                          <div style={{ color: '#6b7280', fontSize: '12px', marginTop: '5px' }}>
-                            <strong>Context:</strong> {finding.context}
+                            <span style={{ 
+                              fontWeight: '600', 
+                              color: '#374151',
+                              fontSize: '14px'
+                            }}>
+                              {finding.type}
+                            </span>
+                            <span style={{
+                              backgroundColor: getSeverityColor(finding.severity),
+                              color: 'white',
+                              padding: '4px 12px',
+                              borderRadius: '15px',
+                              fontSize: '12px',
+                              fontWeight: '600'
+                            }}>
+                              {finding.confidence}% confidence
+                            </span>
                           </div>
-                        )}
+                          <div style={{ 
+                            color: '#6b7280', 
+                            fontSize: '14px',
+                            marginBottom: '8px'
+                          }}>
+                            <strong style={{ color: '#374151' }}>Found:</strong> "{finding.value}"
+                          </div>
+                          {finding.context && (
+                            <div style={{ 
+                              color: '#6b7280', 
+                              fontSize: '13px',
+                              fontStyle: 'italic'
+                            }}>
+                              <strong style={{ color: '#374151', fontStyle: 'normal' }}>Context:</strong> {finding.context}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Recommendations */}
+                {testResults.recommendations && testResults.recommendations.length > 0 && (
+                  <div style={{
+                    backgroundColor: 'white',
+                    padding: '25px',
+                    borderRadius: '12px',
+                    marginBottom: '25px',
+                    boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <h4 style={{ 
+                      marginTop: 0, 
+                      marginBottom: '20px',
+                      color: '#374151',
+                      fontSize: '1.15rem',
+                      fontWeight: '600'
+                    }}>
+                      💡 Recommendations
+                    </h4>
+                    {testResults.recommendations.map((rec, index) => (
+                      <div key={index} style={{
+                        padding: '16px',
+                        marginBottom: '12px',
+                        border: 'none',
+                        borderRadius: '10px',
+                        backgroundColor: '#f0f9ff',
+                        boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)'
+                      }}>
+                        <div style={{ 
+                          fontWeight: '600', 
+                          color: '#0c4a6e', 
+                          marginBottom: '8px',
+                          fontSize: '14px'
+                        }}>
+                          {rec.title}
+                        </div>
+                        <div style={{ 
+                          color: '#374151', 
+                          fontSize: '14px',
+                          lineHeight: '1.6'
+                        }}>
+                          {rec.description}
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Recommendations */}
-              {testResults.recommendations && testResults.recommendations.length > 0 && (
-                <div style={{
-                  backgroundColor: 'white',
-                  padding: '15px',
-                  borderRadius: '6px',
-                  marginBottom: '20px'
-                }}>
-                  <h4 style={{ marginTop: 0, color: '#374151' }}>💡 Recommendations</h4>
-                  {testResults.recommendations.map((rec, index) => (
-                    <div key={index} style={{
-                      padding: '10px',
-                      marginBottom: '10px',
-                      border: '1px solid #e2e8f0',
-                      borderRadius: '4px',
-                      backgroundColor: '#f0f9ff'
-                    }}>
-                      <div style={{ fontWeight: 'bold', color: '#0c4a6e', marginBottom: '5px' }}>
-                        {rec.title}
-                      </div>
-                      <div style={{ color: '#374151', fontSize: '14px' }}>
-                        {rec.description}
-                      </div>
-                    </div>
-                  ))}
+                {/* Raw Data Toggle */}
+                <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                  <button
+                    onClick={() => setShowTestData(!showTestData)}
+                    style={{
+                      backgroundColor: 'rgba(107, 114, 128, 0.9)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '12px 24px',
+                      borderRadius: '10px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#6b7280';
+                      e.target.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'rgba(107, 114, 128, 0.9)';
+                      e.target.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    {showTestData ? '👁️ Hide' : '👁️ Show'} Raw Analysis Data
+                  </button>
                 </div>
-              )}
 
-              {/* Raw Data Toggle */}
-              <div style={{ textAlign: 'center' }}>
-                <button
-                  onClick={() => setShowTestData(!showTestData)}
-                  style={{
-                    backgroundColor: '#6b7280',
-                    color: 'white',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '14px'
-                  }}
-                >
-                  {showTestData ? 'Hide' : 'Show'} Raw Analysis Data
-                </button>
+                {/* Raw Data Display */}
+                {showTestData && (
+                  <div style={{
+                    backgroundColor: '#1e2a38',
+                    color: '#e2e8f0',
+                    padding: '25px',
+                    borderRadius: '12px',
+                    marginTop: '20px',
+                    fontFamily: 'monospace',
+                    fontSize: '12px',
+                    maxHeight: '400px',
+                    overflowY: 'auto',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
+                  }}>
+                    <pre style={{ margin: 0 }}>{JSON.stringify(testResults, null, 2)}</pre>
+                  </div>
+                )}
               </div>
+            )}
+          </div>
+        )}
 
-              {/* Raw Data Display */}
-              {showTestData && (
-                <div style={{
-                  backgroundColor: '#1e2a38',
-                  color: '#e2e8f0',
-                  padding: '20px',
-                  borderRadius: '6px',
-                  marginTop: '20px',
-                  fontFamily: 'monospace',
-                  fontSize: '12px',
-                  maxHeight: '400px',
-                  overflowY: 'auto'
-                }}>
-                  <pre>{JSON.stringify(testResults, null, 2)}</pre>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Instructions */}
-      <div style={{
-        backgroundColor: '#f0fdf4',
-        padding: '20px',
-        borderRadius: '8px',
-        border: '1px solid #22c55e'
-      }}>
-        <h3 style={{ marginTop: 0, color: '#166534' }}>📋 How to Use</h3>
-        <ol style={{ color: '#374151', lineHeight: '1.6' }}>
-          <li>Select your platform (Instagram or Facebook) from the dropdown.</li>
-          <li>Enter a {selectedPlatform === 'instagram' ? 'public username' : 'public page URL'}.</li>
-          <li>Click "Analyze" to start the privacy analysis.</li>
-          <li>Wait for the analysis to complete (may take 1-2 minutes).</li>
-          <li>Review the risk score and PII findings.</li>
-          <li>Follow the recommendations to improve your privacy.</li>
-        </ol>
-        
-        <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#dcfce7', borderRadius: '4px' }}>
-          <strong style={{ color: '#166534' }}>Examples:</strong>
-          <ul style={{ margin: '5px 0', color: '#374151' }}>
-            {platformInfo.examples.map((example, index) => (
-              <li key={index}><code>{example}</code></li>
-            ))}
-          </ul>
-        </div>
-        
-        <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#dcfce7', borderRadius: '4px' }}>
-          <strong style={{ color: '#166534' }}>Note:</strong> This tool uses our <strong>secure backend service</strong> to analyze real social media profiles in real-time. 
-          No data is stored permanently, and all analysis is performed securely on our servers.
+        {/* Instructions */}
+        <div style={{
+          backgroundColor: 'rgba(240, 253, 244, 0.95)',
+          backdropFilter: 'blur(10px)',
+          padding: '30px',
+          borderRadius: '12px',
+          border: 'none',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
+        }}>
+          <h3 style={{ 
+            marginTop: 0, 
+            marginBottom: '20px',
+            color: '#166534',
+            fontSize: '1.4rem',
+            fontWeight: '600'
+          }}>
+            📋 How to Use
+          </h3>
+          <ol style={{ 
+            color: '#374151', 
+            lineHeight: '1.8',
+            paddingLeft: '20px',
+            margin: '0 0 20px 0'
+          }}>
+            <li>Select your platform (Instagram or Facebook) from the dropdown</li>
+            <li>Enter a {selectedPlatform === 'instagram' ? 'public username' : 'public page URL'}</li>
+            <li>Click "Analyze" to start the privacy analysis</li>
+            <li>Wait for the analysis to complete (may take 1-2 minutes)</li>
+            <li>Review the risk score and PII findings</li>
+            <li>Follow the recommendations to improve your privacy</li>
+          </ol>
+          
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '16px', 
+            backgroundColor: 'rgba(220, 252, 231, 0.6)', 
+            borderRadius: '10px',
+            border: '1px solid rgba(34, 197, 94, 0.2)'
+          }}>
+            <strong style={{ color: '#166534', fontSize: '14px' }}>💡 Examples:</strong>
+            <ul style={{ 
+              margin: '10px 0 0 0', 
+              color: '#374151',
+              paddingLeft: '20px',
+              lineHeight: '1.8'
+            }}>
+              {platformInfo.examples.map((example, index) => (
+                <li key={index}>
+                  <code style={{ 
+                    backgroundColor: 'white', 
+                    padding: '4px 8px', 
+                    borderRadius: '4px',
+                    fontSize: '13px',
+                    fontFamily: 'monospace'
+                  }}>
+                    {example}
+                  </code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div style={{ 
+            marginTop: '16px', 
+            padding: '16px', 
+            backgroundColor: 'rgba(220, 252, 231, 0.6)', 
+            borderRadius: '10px',
+            border: '1px solid rgba(34, 197, 94, 0.2)',
+            fontSize: '14px',
+            lineHeight: '1.7'
+          }}>
+            <strong style={{ color: '#166534' }}>🔒 Privacy Note:</strong>
+            <span style={{ color: '#374151' }}> This tool uses our <strong>secure backend service</strong> to analyze real social media profiles in real-time. 
+            No data is stored permanently, and all analysis is performed securely on our servers.</span>
+          </div>
         </div>
       </div>
     </div>
