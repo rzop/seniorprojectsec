@@ -1,0 +1,95 @@
+@import './LoadingAnimations.css';
+
+.hud-test-override {
+  color: #00ffff !important;
+  background: #000 !important;
+  font-family: monospace !important;
+}
+
+.hud-test-override * {
+  color: #00ffff !important;
+  font-family: monospace !important;
+}
+
+.hud-test-override h1 {
+  color: #00ffff !important;
+}
+
+.hud-test-override .cyan-text {
+  color: #00ffff !important;
+}
+
+.hud-test-override .magenta-text {
+  color: #ff0080 !important;
+}
+
+.hud-test-override .test-box {
+  color: #00ffff !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  font-family: monospace !important;
+  border: 1px solid #00ffff !important;
+}
+
+.hud-test-override .error-box {
+  color: #ff0080 !important;
+  background: rgba(0, 0, 0, 0.9) !important;
+  font-family: monospace !important;
+  border: 1px solid #ff0080 !important;
+}
+
+.hud-test-override .status-box {
+  color: #00ffff !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  font-family: monospace !important;
+  border: 1px solid #00ffff !important;
+}
+
+.hud-test-override button {
+  background: transparent !important;
+  color: #00ffff !important;
+  border: 1px solid #00ffff !important;
+  font-family: monospace !important;
+  cursor: pointer !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+.hud-test-override button:hover {
+  background: rgba(0, 255, 255, 0.1) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Force styling on child components */
+.hud-test-override .bg-black {
+  background: #000 !important;
+}
+
+.hud-test-override .text-white {
+  color: #00ffff !important;
+}
+
+.hud-test-override .text-cyan-400 {
+  color: #00ffff !important;
+}
+
+.hud-test-override .border-cyan-400 {
+  border-color: #00ffff !important;
+}
+
+/* Override any Tailwind classes that might interfere */
+.hud-test-override .animate-ping {
+  color: #00ffff !important;
+  border-color: #00ffff !important;
+}
+
+.hud-test-override .animate-pulse {
+  color: #00ffff !important;
+}
+
+.hud-test-override .animate-bounce {
+  color: #00ffff !important;
+}

@@ -8,7 +8,10 @@ import PasswordGenerator from './passwordgenerator';
 import PasswordInfo from './PasswordInfo';
 import PhishingInfo from './PhishingInfo';
 import SocialMediaInfo from './SocialMediaInfo';
-import backgroundGif from './assets/backgroundgif.gif';
+import HUDNeonTest from './HUDNeonTest';
+import HUDTestSimple from './HUDTestSimple';
+import HUDDebug from './HUDDebug';
+import HUDTestFixed from './HUDTestFixed';
 
 // Component to scroll to top on route change
 function ScrollToTop() {
@@ -40,6 +43,25 @@ function Home() {
             Welcome to <strong>SecuraSphere</strong>! Explore our interactive tools and resources
             to learn about your online security and privacy. Choose a module below to get started.
           </p>
+          
+          {/* Test Button for HUDNeon */}
+          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <button 
+              onClick={() => navigate('/test')}
+              style={{
+                background: 'linear-gradient(45deg, #22fc63ff, #07f78fff)',
+                color: '#000',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }}
+            >
+              View test UI
+            </button>
+          </div>
         </section>
 
         <section className="modules">
@@ -78,6 +100,12 @@ function App() {
     <Router>
       <ScrollToTop />
       <Routes>
+        {/*Test Home*/}
+        <Route path="/test" element={<HUDTestFixed />} />
+        <Route path="/hud-debug" element={<HUDDebug />} />
+        <Route path="/hud-test" element={<HUDTestFixed />} />
+        <Route path="/hud-original" element={<HUDNeonTest />} />
+
         <Route path="/" element={<Home />} />
         
         {/* Info Pages */}
