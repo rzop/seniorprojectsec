@@ -8,9 +8,6 @@ import PasswordGenerator from './passwordgenerator';
 import PasswordInfo from './PasswordInfo';
 import PhishingInfo from './PhishingInfo';
 import SocialMediaInfo from './SocialMediaInfo';
-import HUDNeonTest from './HUDNeonTest';
-import HUDTestSimple from './HUDTestSimple';
-import HUDDebug from './HUDDebug';
 import HUDTestFixed from './HUDTestFixed';
 
 // Component to scroll to top on route change
@@ -102,10 +99,6 @@ function App() {
       <Routes>
         {/*Test Home*/}
         <Route path="/test" element={<HUDTestFixed />} />
-        <Route path="/hud-debug" element={<HUDDebug />} />
-        <Route path="/hud-test" element={<HUDTestFixed />} />
-        <Route path="/hud-original" element={<HUDNeonTest />} />
-
         <Route path="/" element={<Home />} />
         
         {/* Info Pages */}
