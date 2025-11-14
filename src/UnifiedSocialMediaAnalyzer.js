@@ -85,7 +85,7 @@ function UnifiedSocialMediaAnalyzer() {
       
       // calls backend API
       const response = await axios.post(`${API_BASE_URL}/${selectedPlatform}/analyze`, requestData, {
-        timeout: 120000, // 2 minute timeout for scraping
+        timeout: 180000, // 3 minute timeout for scraping 50 posts
         headers: {
           'Content-Type': 'application/json'
         }
@@ -811,7 +811,7 @@ function UnifiedSocialMediaAnalyzer() {
             <li>Select your platform (Instagram or Facebook) from the dropdown</li>
             <li>Enter a {selectedPlatform === 'instagram' ? 'public username' : 'public page URL'}</li>
             <li>Click "Analyze" to start the privacy analysis</li>
-            <li>Wait for the analysis to complete (may take 1-2 minutes)</li>
+            <li>Wait for the analysis to complete (typically less than a minute)</li>
             <li>Review the risk score and PII findings</li>
             <li>Follow the recommendations to improve your privacy</li>
           </ol>

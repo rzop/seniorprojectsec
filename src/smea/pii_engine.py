@@ -174,12 +174,12 @@ class PIIEngine:
         
         return findings
 
-    def _get_context(self, text: str, match: str, context_length: int = 50) -> str:
+    def _get_context(self, text: str, match: str, context_length: int = 40) -> str:
         """gets surrounding context for a match"""
         try:
             match_index = text.lower().find(match.lower())
             if match_index == -1:
-                return text[:100] + "..." if len(text) > 100 else text
+                return text[:80] + "..." if len(text) > 80 else text
             
             start = max(0, match_index - context_length)
             end = min(len(text), match_index + len(match) + context_length)
@@ -193,7 +193,7 @@ class PIIEngine:
             
             return context
         except Exception:
-            return text[:100] + "..." if len(text) > 100 else text
+            return text[:80] + "..." if len(text) > 80 else text
 
     def _calculate_confidence(self, pii_type: str, match: str, context: str) -> float:
         """calculates confidence score for a PII finding"""
