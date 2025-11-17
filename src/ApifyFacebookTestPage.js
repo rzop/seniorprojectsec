@@ -434,7 +434,7 @@ function ApifyFacebookTestPage() {
         <ol style={{ color: '#374151', lineHeight: '1.6' }}>
           <li>Enter a public Facebook page URL (try: facebook.com/facebook, facebook.com/nasa, facebook.com/tesla)</li>
           <li>Click "Analyze Facebook Page" to start the privacy analysis</li>
-          <li>Wait for the analysis to complete (may take 1-2 minutes)</li>
+          <li>Wait for the analysis to complete (typically less than a minute)</li>
           <li>Review the risk score and PII findings</li>
           <li>Follow the recommendations to improve your privacy</li>
         </ol>

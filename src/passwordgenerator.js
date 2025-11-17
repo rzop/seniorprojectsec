@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
-
+//
 function PasswordGenerator() {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -11,6 +11,7 @@ function PasswordGenerator() {
   const [generationType, setGenerationType] = useState('random');
   const [isChecking, setIsChecking] = useState(false);
   const [breachStatus, setBreachStatus] = useState(null);
+  const [customPrefix, setCustomPrefix] = useState('');
 
   // I used my blum blum algorithm I previously implemented in CIS 4362 but it's converted into javascript since I originally wrote the code in python. The core logic is similar.
   const gcd = (a, b) => {
@@ -140,9 +141,43 @@ function PasswordGenerator() {
     setCopied(false);
   };
   
+  const generatePrefixPassword = async () => {
+    setIsChecking(true);
+    setBreachStatus(null);
+
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+    let newPassword = customPrefix;
+    const remainingLength = length - customPrefix.length;
+
+    if (remainingLength < 0) {
+      setPassword("Prefix is longer than the chosen password length!");
+      setIsChecking(false);
+      return;
+    }
+
+    const randomValues = new Uint32Array(remainingLength);
+    crypto.getRandomValues(randomValues);
+
+    for (let i = 0; i < remainingLength; i++) {
+      const index = randomValues[i] % charset.length;
+      newPassword += charset[index];
+    }
+
+    const isSafe = await checkPasswordBreach(newPassword);
+
+    setPassword(newPassword);
+    setBreachStatus(isSafe);
+    setIsChecking(false);
+    setCopied(false);
+  };
+
   const generatePassword = () => {
     if (generationType === 'memorable') {
       generateMemorablePassword();
+    }
+    else if (generationType === 'prefix') {
+      generatePrefixPassword();
     }
     else {
       generateRandomPassword();
@@ -199,8 +234,67 @@ function PasswordGenerator() {
               />
               Memorable (Easier to Remember)
             </label>
+            <label style={{ marginLeft: '20px' }}>
+              <input
+                type="radio"
+                value="prefix"
+                checked={generationType === 'prefix'}
+                onChange={(e) => setGenerationType(e.target.value)}
+              />
+              Prefix (Customize it to be more meaningful to you)
+            </label>
           </div>
-          
+
+          {generationType === 'prefix' && (
+            <div style={{ margin: '20px 0' }}>
+              <label style={{ 
+                fontSize: '1.1rem',
+                color: '#1e2a38',
+                fontWeight: 'bold'
+              }}>
+                Custom Prefix:
+                <input
+                  type="text"
+                  value={customPrefix}
+                  onChange={(e) => setCustomPrefix(e.target.value)}
+                  placeholder="Enter prefix"
+                  style={{
+                    display: 'block',
+                    marginTop: '10px',
+                    padding: '8px',
+                    width: '250px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    borderRadius: '6px',
+                    border: '1px solid #ccc'
+                  }}
+                />
+              </label>
+
+              <label style={{ 
+                fontSize: '1.1rem',
+                color: '#1e2a38',
+                fontWeight: 'bold',
+                marginTop: '15px'
+              }}>
+                Password Length: {length}
+                <input
+                  type="range"
+                  min="8"
+                  max="64"
+                  value={length}
+                  onChange={(e) => setLength(Number(e.target.value))}
+                  style={{ 
+                    marginLeft: '10px', 
+                    width: '200px',
+                    display: 'block',
+                    margin: '10px auto'
+                  }}
+                />
+              </label>
+            </div>
+          )}
+            
           {generationType === 'random' && (
             <div style={{ margin: '20px 0' }}>
               <label style={{ 
