@@ -26,10 +26,10 @@ class FacebookService:
             # prepares actor input for Facebook scraper
             run_input = {
                 "startUrls": [{"url": page_url}],
-                "resultsLimit": 25,
+                "resultsLimit": 50,  # Increased from 25 to 50 for better analysis
                 "captionText": True,
-                "includeComments": True,
-                "maxComments": 10
+                "includeComments": False,  # Disabled for faster scraping
+                "maxComments": 0  # No comments for speed optimization
             }
 
             # runs the actor and wait for it to finish
@@ -103,9 +103,14 @@ class FacebookService:
 
         return {'user': user, 'posts': posts, 'page_info': page_info}
 
-    def _process_comments(self, comments: List[Dict]) -> List[Dict]:
+    def _process_comments(self, comments) -> List[Dict]:
         """processes Facebook comments"""
-        if not comments:
+        # Handle case where comments might be an integer (count) or None
+        if not comments or isinstance(comments, (int, str)):
+            return []
+        
+        # Ensure comments is a list
+        if not isinstance(comments, list):
             return []
         
         return [

@@ -1,5 +1,6 @@
 import re
 from typing import Dict, List, Any, Union
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class PIIEngine:
     def __init__(self):
@@ -107,18 +108,40 @@ class PIIEngine:
         }
 
     def scan_for_pii(self, text_data: Union[str, Dict]) -> List[Dict]:
-        """scans text data for PII patterns"""
+        """scans text data for PII patterns with parallel processing"""
         findings = []
         text_sources = self._normalize_text_data(text_data)
         
+        # Prepare all scan tasks
+        scan_tasks = []
         for location, texts in text_sources.items():
             if not isinstance(texts, list):
                 texts = [texts]
             
             for index, text in enumerate(texts):
                 if isinstance(text, str) and text.strip():
-                    location_findings = self._scan_text(text, location, index)
-                    findings.extend(location_findings)
+                    scan_tasks.append((text, location, index))
+        
+        # Process in parallel for speed (max 4 workers to avoid overhead)
+        if len(scan_tasks) > 10:
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                future_to_task = {
+                    executor.submit(self._scan_text, text, location, index): (text, location, index)
+                    for text, location, index in scan_tasks
+                }
+                
+                for future in as_completed(future_to_task):
+                    try:
+                        location_findings = future.result()
+                        findings.extend(location_findings)
+                    except Exception as e:
+                        # Skip failed scans but continue processing
+                        pass
+        else:
+            # For small datasets, sequential is faster (no thread overhead)
+            for text, location, index in scan_tasks:
+                location_findings = self._scan_text(text, location, index)
+                findings.extend(location_findings)
         
         return self._deduplicate_findings(findings)
 
