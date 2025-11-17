@@ -21,7 +21,7 @@ class InstagramService:
                 "directUrls": [f"https://www.instagram.com/{username}/"],
                 "resultsType": "posts",
                 "resultsLimit": 50,
-                "addParentData": False  # Disabled to speed up scraping
+                "addParentData": False
             }
 
             # runs the actor and wait for it to finish

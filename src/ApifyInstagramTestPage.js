@@ -49,7 +49,7 @@ function ApifyInstagramTestPage() {
       const response = await axios.post(`${API_BASE_URL}/instagram/analyze`, {
         username: username
       }, {
-        timeout: 180000, // 3 minute timeout for scraping 50 posts
+        timeout: 180000, // 3 minute timeout for scraping
         headers: {
           'Content-Type': 'application/json'
         }

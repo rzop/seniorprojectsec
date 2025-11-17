@@ -85,7 +85,7 @@ function UnifiedSocialMediaAnalyzer() {
       
       // calls backend API
       const response = await axios.post(`${API_BASE_URL}/${selectedPlatform}/analyze`, requestData, {
-        timeout: 180000, // 3 minute timeout for scraping 50 posts
+        timeout: 180000, // 3 minute timeout for scraping
         headers: {
           'Content-Type': 'application/json'
         }
