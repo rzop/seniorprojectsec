@@ -24,11 +24,15 @@ class InstagramService:
                 "addParentData": False
             }
 
-            # runs the actor and wait for it to finish
-            run = self.client.actor(self.actor_id).call(run_input=run_input)
+            # runs the actor and wait for it to finish (with timeout for speed)
+            run = self.client.actor(self.actor_id).call(
+                run_input=run_input,
+                timeout_secs=90  # 90 second timeout to fail fast
+            )
             
-            # fetches results from the run's dataset
-            items = list(self.client.dataset(run["defaultDatasetId"]).iterate_items())
+            # fetches results from the run's dataset (limit to speed up)
+            dataset = self.client.dataset(run["defaultDatasetId"])
+            items = list(dataset.iterate_items(limit=50))  # Limit for speed
             
             if not items:
                 raise ValueError('No data returned from Instagram scraper')
@@ -93,9 +97,11 @@ class InstagramService:
         }
 
         if user_data.get('media', {}).get('data'):
+            # Only include posts with actual text content for faster processing
             text_content['posts'] = [
                 post.get('caption', '') 
                 for post in user_data['media']['data']
+                if post.get('caption', '').strip()
             ]
 
         return text_content

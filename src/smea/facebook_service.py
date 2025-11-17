@@ -23,20 +23,28 @@ class FacebookService:
             # Remove trailing slash and ensure proper format
             page_url = page_url.rstrip('/')
 
-            # prepares actor input for Facebook scraper
+            # prepares actor input for Facebook scraper - optimized for speed
             run_input = {
                 "startUrls": [{"url": page_url}],
-                "resultsLimit": 25,
+                "resultsLimit": 35,  # Reduced to 35 for faster scraping (Facebook is slower than Instagram)
                 "captionText": True,
-                "includeComments": True,
-                "maxComments": 10
+                "includeComments": False,  # Disabled for faster scraping
+                "maxComments": 0,  # No comments for speed optimization
+                "scrapeAbout": False,  # Skip about section for speed
+                "scrapeReviews": False,  # Skip reviews for speed
+                "scrapeServices": False,  # Skip services for speed
+                "scrapePosts": True,  # Only scrape posts
             }
 
-            # runs the actor and wait for it to finish
-            run = self.client.actor(self.actor_id).call(run_input=run_input)
+            # runs the actor and wait for it to finish (with timeout for speed)
+            run = self.client.actor(self.actor_id).call(
+                run_input=run_input,
+                timeout_secs=120  # 2 minute timeout to fail fast
+            )
             
-            # fetches results from the run's dataset
-            items = list(self.client.dataset(run["defaultDatasetId"]).iterate_items())
+            # fetches results from the run's dataset (limit to speed up)
+            dataset = self.client.dataset(run["defaultDatasetId"])
+            items = list(dataset.iterate_items(limit=35))  # Limit for speed
             
             if not items:
                 raise ValueError('No data returned from Facebook scraper')
@@ -55,57 +63,66 @@ class FacebookService:
             raise Exception(f'Facebook service error: {str(e)}')
 
     def _process_results(self, results: List[Dict], page_url: str) -> Dict:
-        """processes raw Apify results"""
+        """processes raw Apify results - optimized for speed"""
         # Extract page info from the first result or create default
         first_result = results[0] if results else {}
         
         # Extract page name from URL
         page_name = page_url.split('/')[-1] if '/' in page_url else page_url
         
+        # Minimal user data for speed
         user = {
             'id': first_result.get('pageId', page_name),
             'username': page_name,
             'accountType': 'page',
             'postsCount': len(results),
             'name': first_result.get('pageName', page_name),
-            'profilePictureUrl': first_result.get('pageProfilePicture', ''),
-            'followersCount': first_result.get('pageFollowersCount', 0),
-            'likesCount': first_result.get('pageLikesCount', 0)
+            'profilePictureUrl': '',  # Skip for speed
+            'followersCount': 0,  # Skip for speed
+            'likesCount': 0  # Skip for speed
         }
 
+        # Only extract essential post data for PII analysis
         posts = {
             'data': [
                 {
-                    'id': item.get('postId', item.get('id')),
+                    'id': item.get('postId', item.get('id', '')),
                     'type': 'POST',
                     'message': item.get('text', ''),
-                    'caption': item.get('text', ''),  # For consistency with Instagram
-                    'timestamp': item.get('createdTime'),
-                    'permalink': item.get('url'),
-                    'url': item.get('url'),
-                    'likesCount': item.get('likesCount', 0),
-                    'commentsCount': item.get('commentsCount', 0),
-                    'sharesCount': item.get('sharesCount', 0),
-                    'comments': self._process_comments(item.get('comments', []))
+                    'caption': item.get('text', ''),
+                    'timestamp': item.get('createdTime', ''),
+                    'permalink': item.get('url', ''),
+                    'url': item.get('url', ''),
+                    'likesCount': 0,  # Skip for speed
+                    'commentsCount': 0,  # Skip for speed
+                    'sharesCount': 0,  # Skip for speed
+                    'comments': []  # No comments for speed
                 }
                 for item in results
+                if item.get('text', '').strip()  # Only include posts with text
             ],
             'count': len(results)
         }
 
+        # Minimal page info
         page_info = {
             'name': first_result.get('pageName', page_name),
             'description': first_result.get('pageDescription', ''),
-            'category': first_result.get('pageCategory', ''),
-            'website': first_result.get('pageWebsite', ''),
-            'location': first_result.get('pageLocation', '')
+            'category': '',  # Skip for speed
+            'website': '',  # Skip for speed
+            'location': ''  # Skip for speed
         }
 
         return {'user': user, 'posts': posts, 'page_info': page_info}
 
-    def _process_comments(self, comments: List[Dict]) -> List[Dict]:
+    def _process_comments(self, comments) -> List[Dict]:
         """processes Facebook comments"""
-        if not comments:
+        # Handle case where comments might be an integer (count) or None
+        if not comments or isinstance(comments, (int, str)):
+            return []
+        
+        # Ensure comments is a list
+        if not isinstance(comments, list):
             return []
         
         return [
@@ -128,16 +145,12 @@ class FacebookService:
         }
 
         if user_data.get('posts', {}).get('data'):
-            for post in user_data['posts']['data']:
-                # Add post text
-                if post.get('message'):
-                    text_content['posts'].append(post['message'])
-                
-                # Add comments text
-                if post.get('comments'):
-                    for comment in post['comments']:
-                        if comment.get('text'):
-                            text_content['comments'].append(comment['text'])
+            # Only include posts with actual text content for faster processing
+            text_content['posts'] = [
+                post['message']
+                for post in user_data['posts']['data']
+                if post.get('message', '').strip()
+            ]
 
         return text_content
 
