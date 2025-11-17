@@ -12,7 +12,7 @@ class PIIEngine:
                 'description': 'Email address detected'
             },
             'phone': {
-                'regex': re.compile(r'(?:(?:\+?1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})|(?:(?:call|text|reach)\s*(?:me\s*)?(?:at\s*)?[\d\s\-\(\)]{10,}))', re.IGNORECASE),
+                'regex': re.compile(r'(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}'),
                 'severity': 'high',
                 'description': 'Phone number or contact information detected'
             },
@@ -22,12 +22,12 @@ class PIIEngine:
                 'description': 'IP address detected'
             },
             'childInfo': {
-                'regex': re.compile(r'\b(?:my\s+(?:son|daughter|kid|child|baby)(?:\'?s?)?\s+(?:name\s+is\s+)?[A-Z][a-z]+|[A-Z][a-z]+\s+is\s+my\s+(?:son|daughter|kid|child))\b'),
+                'regex': re.compile(r'\bmy\s+(?:son|daughter|kid|child|baby)\s+[A-Z][a-z]+\b'),
                 'severity': 'high',
                 'description': 'Child identification information detected'
             },
             'medicalInfo': {
-                'regex': re.compile(r'\b(?:diagnosed with|taking medication|prescription for|medical condition|therapy for|doctor said|hospital for)\s+[a-z]{4,}\b', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:diagnosed|medication|prescription|medical condition|therapy|hospital)\s+\w+', re.IGNORECASE),
                 'severity': 'high',
                 'description': 'Medical information detected'
             },
@@ -44,64 +44,64 @@ class PIIEngine:
                 'description': 'Zip code detected'
             },
             'birthDate': {
-                'regex': re.compile(r'\b(?:born|birthday|b-?day|turning|turned|dob|date of birth|born on)\s*:?\s*(?:\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|\d{1,2}\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{2,4})', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:birthday|born)\s*:?\s*\d{1,2}[-/]\d{1,2}[-/]\d{2,4}', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Birth date information detected'
             },
             'school': {
-                'regex': re.compile(r'\b(?:go(?:es|ing)?\s+to|attend(?:s|ing)?|student\s+at|studying\s+at|enrolled\s+at|graduated\s+from)\s+([A-Z][A-Za-z\s]+(?:School|College|University|Academy|Institute))', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:attend|student at|studying at)\s+\w+\s+(?:School|College|University)', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'School or university information detected'
             },
             'workplace': {
-                'regex': re.compile(r'\b(?:work(?:s|ing)?\s+(?:at|for)|employed\s+(?:at|by|with)|my\s+job\s+at|position\s+at|hired\s+at)\s+([A-Z][A-Za-z\s&,\.]+)', re.IGNORECASE),
+                'regex': re.compile(r'\bwork(?:s|ing)?\s+(?:at|for)\s+[A-Z]\w+', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Workplace information detected'
             },
             'location': {
-                'regex': re.compile(r'\b(?:live\s+(?:in|at)|from|located\s+in|based\s+in|moving\s+to|resident\s+of)\s+([A-Z][a-z]+(?:\s*,\s*[A-Z][a-z]+)*)\b', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:live in|from|based in)\s+[A-Z]\w+', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Location information detected'
             },
             'travelPlans': {
-                'regex': re.compile(r'\b(?:going\s+to|traveling\s+to|vacation\s+in|trip\s+to|visiting|leaving\s+for|heading\s+to|away\s+(?:until|till|from))\s+[A-Z][a-z]+', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:going to|traveling to|vacation in|trip to)\s+[A-Z]\w+', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Travel plans or absence information detected'
             },
             'financialInfo': {
-                'regex': re.compile(r'\b(?:make|making|earn|earning|salary|paid|income)\s+(?:about\s+)?[$€£]\s*[\d,]+(?:\s*k)?(?:\s+(?:per|a)\s+(?:year|month|hour))?\b', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:salary|income|earn)\s+[$€£]\s*[\d,]+', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Financial information detected'
             },
             'vehicleInfo': {
-                'regex': re.compile(r'\b(?:my\s+car|my\s+vehicle|driving\s+a)\s+(?:\d{4}\s+)?[A-Z][a-z]+\s+[A-Z][a-z]+\b', re.IGNORECASE),
+                'regex': re.compile(r'\bmy\s+(?:car|vehicle)\s+\d{4}\s+\w+', re.IGNORECASE),
                 'severity': 'medium',
                 'description': 'Vehicle information detected'
             },
             
             # low-risk patterns  
             'age': {
-                'regex': re.compile(r'\b(?:I\'?m|I\s+am|age\s+is?|years?\s+old|turned|turning)\s+\d{1,2}\b', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:I\'?m|years old)\s+\d{1,2}\b', re.IGNORECASE),
                 'severity': 'low',
                 'description': 'Age information detected'
             },
             'familyMember': {
-                'regex': re.compile(r'\b(?:my\s+(?:mom|dad|mother|father|sister|brother|husband|wife|grandma|grandpa|aunt|uncle))\s+[A-Z][a-z]+\b'),
+                'regex': re.compile(r'\bmy\s+(?:mom|dad|mother|father|sister|brother)\s+[A-Z]\w+\b'),
                 'severity': 'low',
                 'description': 'Family member name detected'
             },
             'dailyRoutine': {
-                'regex': re.compile(r'\b(?:every|each)\s+(?:morning|day|night|evening)\s+(?:at|around)\s+\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM)?\b', re.IGNORECASE),
+                'regex': re.compile(r'\bevery\s+(?:morning|day|night)\s+at\s+\d{1,2}', re.IGNORECASE),
                 'severity': 'low',
                 'description': 'Daily routine pattern detected'
             },
             'petInfo': {
-                'regex': re.compile(r'\b(?:my\s+(?:dog|cat|pet)(?:\'?s?)?\s+name\s+is\s+[A-Z][a-z]+)\b'),
+                'regex': re.compile(r'\bmy\s+(?:dog|cat|pet)\s+\w+\b', re.IGNORECASE),
                 'severity': 'low',
                 'description': 'Pet name detected (common security question answer)'
             },
             'relationship': {
-                'regex': re.compile(r'\b(?:dating|married\s+to|engaged\s+to|in\s+a\s+relationship\s+with)\s+[A-Z][a-z]+\b', re.IGNORECASE),
+                'regex': re.compile(r'\b(?:dating|married to)\s+[A-Z]\w+\b', re.IGNORECASE),
                 'severity': 'low',
                 'description': 'Relationship information detected'
             }
@@ -122,9 +122,9 @@ class PIIEngine:
                 if isinstance(text, str) and text.strip():
                     scan_tasks.append((text, location, index))
         
-        # Process in parallel for speed (max 4 workers to avoid overhead)
-        if len(scan_tasks) > 10:
-            with ThreadPoolExecutor(max_workers=4) as executor:
+        # Process in parallel for speed (max 8 workers for faster processing)
+        if len(scan_tasks) > 5:
+            with ThreadPoolExecutor(max_workers=8) as executor:
                 future_to_task = {
                     executor.submit(self._scan_text, text, location, index): (text, location, index)
                     for text, location, index in scan_tasks
@@ -197,12 +197,12 @@ class PIIEngine:
         
         return findings
 
-    def _get_context(self, text: str, match: str, context_length: int = 40) -> str:
+    def _get_context(self, text: str, match: str, context_length: int = 30) -> str:
         """gets surrounding context for a match"""
         try:
             match_index = text.lower().find(match.lower())
             if match_index == -1:
-                return text[:80] + "..." if len(text) > 80 else text
+                return text[:60] + "..." if len(text) > 60 else text
             
             start = max(0, match_index - context_length)
             end = min(len(text), match_index + len(match) + context_length)
@@ -216,61 +216,25 @@ class PIIEngine:
             
             return context
         except Exception:
-            return text[:80] + "..." if len(text) > 80 else text
+            return text[:60] + "..." if len(text) > 60 else text
 
     def _calculate_confidence(self, pii_type: str, match: str, context: str) -> float:
         """calculates confidence score for a PII finding"""
-        confidence = 0.7
+        # Fast lookup table for confidence scores
+        confidence_map = {
+            'email': 0.95, 'phone': 0.9, 'ipAddress': 0.85,
+            'childInfo': 0.9, 'medicalInfo': 0.85,
+            'address': 0.8, 'zipCode': 0.85, 'birthDate': 0.85,
+            'school': 0.8, 'workplace': 0.8, 'location': 0.75,
+            'travelPlans': 0.8, 'financialInfo': 0.85, 'vehicleInfo': 0.7,
+            'age': 0.75, 'familyMember': 0.7, 'dailyRoutine': 0.7,
+            'petInfo': 0.75, 'relationship': 0.7
+        }
         
-        # High-risk patterns
-        if pii_type == 'email':
-            confidence = 0.95 if self._validate_email(match) else 0.6
-        elif pii_type == 'phone':
-            confidence = 0.9 if self._validate_phone(match) else 0.7
-        elif pii_type == 'ipAddress':
-            confidence = 0.85
-        elif pii_type == 'childInfo':
-            confidence = 0.9
-        elif pii_type == 'medicalInfo':
-            confidence = 0.85
-            
-        # Medium-risk patterns
-        elif pii_type == 'address':
-            confidence = 0.8
-        elif pii_type == 'zipCode':
-            confidence = 0.85
-        elif pii_type == 'birthDate':
-            confidence = 0.85
-        elif pii_type == 'school':
-            confidence = 0.8
-        elif pii_type == 'workplace':
-            confidence = 0.8
-        elif pii_type == 'location':
-            confidence = 0.75
-        elif pii_type == 'travelPlans':
-            confidence = 0.8
-        elif pii_type == 'financialInfo':
-            confidence = 0.85
-        elif pii_type == 'vehicleInfo':
-            confidence = 0.7
-            
-        # Low-risk patterns
-        elif pii_type == 'age':
-            confidence = 0.75
-        elif pii_type == 'familyMember':
-            confidence = 0.7
-        elif pii_type == 'dailyRoutine':
-            confidence = 0.7
-        elif pii_type == 'petInfo':
-            confidence = 0.75
-        elif pii_type == 'relationship':
-            confidence = 0.7
-        else:
-            confidence = 0.6
+        confidence = confidence_map.get(pii_type, 0.7)
         
-        # Reduce confidence for test/fake data
-        context_lower = context.lower()
-        if any(word in context_lower for word in ['fake', 'example', 'test', 'demo', 'sample']):
+        # Quick check for test/fake data (only if needed)
+        if 'fake' in context.lower() or 'test' in context.lower():
             confidence *= 0.3
         
         return round(confidence, 2)
