@@ -49,7 +49,7 @@ function ApifyFacebookTestPage() {
       const response = await axios.post(`${API_BASE_URL}/facebook/analyze`, {
         pageUrl: pageUrl
       }, {
-        timeout: 120000, // 2 minute timeout for scraping
+        timeout: 180000, // 3 minute timeout for scraping
         headers: {
           'Content-Type': 'application/json'
         }

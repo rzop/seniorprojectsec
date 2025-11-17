@@ -20,8 +20,8 @@ class InstagramService:
             run_input = {
                 "directUrls": [f"https://www.instagram.com/{username}/"],
                 "resultsType": "posts",
-                "resultsLimit": 25,
-                "addParentData": True
+                "resultsLimit": 50,
+                "addParentData": False
             }
 
             # runs the actor and wait for it to finish
