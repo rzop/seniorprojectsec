@@ -6,6 +6,7 @@
   justify-content: center;
   min-height: 50vh;
   position: relative;
+  padding-top: 20px;
 }
 
 .loading-radar {

@@ -35,10 +35,8 @@ function HUDNeonWorking() {
     <div className="relative min-h-screen bg-black text-cyan-100 overflow-hidden">
       {/* Animated Background Effects */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Floating background blobs */}
-        <div className="absolute -top-40 left-1/3 h-96 w-96 rounded-full opacity-30 blur-3xl bg-gradient-to-r from-cyan-400/25 to-blue-500/25 animate-pulse"></div>
-        <div className="absolute top-20 right-1/4 h-64 w-64 rounded-full opacity-20 blur-3xl bg-gradient-to-r from-teal-400/15 to-cyan-500/15 animate-bounce"></div>
-        <div className="absolute bottom-10 left-1/4 h-80 w-80 rounded-full opacity-25 blur-3xl bg-gradient-to-r from-cyan-300/10 to-blue-400/10 animate-pulse"></div>
+        {/* Background Opaque Circle Thing*/}
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-96 w-96 rounded-full opacity-30 blur-3xl bg-gradient-to-r from-cyan-400/25 to-blue-500/25 animate-pulse" style={{ top: '-110px' }}></div>
       </div>
 
       {/* Radar positioned at very top center */}

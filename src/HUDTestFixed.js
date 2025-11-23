@@ -17,7 +17,7 @@ function HUDTestFixed() {
         // Show loading for a bit longer for the full effect
         setTimeout(() => {
           setIsLoading(false);
-        }, 3000); // 3 seconds total loading time
+        }, 2000); // 2 seconds total loading time
       }, 500);
 
       return () => clearTimeout(loadingTimer);
@@ -84,7 +84,18 @@ function HUDTestFixed() {
             fontSize: '14px',
             padding: '8px 12px',
             borderRadius: '4px',
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseOver={(e) => {
+            e.target.style.background = 'rgba(0, 255, 255, 0.1)';
+            e.target.style.transform = 'scale(1.05)';
+            e.target.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.background = 'transparent';
+            e.target.style.transform = 'scale(1)';
+            e.target.style.boxShadow = 'none';
           }}
         >
           ← Back to Main App

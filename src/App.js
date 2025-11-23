@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
+import PhishingTrainingPage from './PhishingTrainingPage';
+import PasswordSecurityPage from './PasswordSecurityPage';
+import SocialMediaAnalysisPage from './SocialMediaAnalysisPage';
 import UnifiedSocialMediaAnalyzer from './UnifiedSocialMediaAnalyzer';
 import PasswordChecker from './passwordchecker';
 import PasswordGenerator from './passwordgenerator';
@@ -103,8 +106,11 @@ function App() {
         
         {/* Info Pages */}
         <Route path="/password-info" element={<PasswordInfo />} />
+        <Route path="/passwordchecker" element={<PasswordSecurityPage />} />
         <Route path="/phishing-info" element={<PhishingInfo />} />
+        <Route path="/phishing" element={<PhishingTrainingPage />} />
         <Route path="/social-media-info" element={<SocialMediaInfo />} />
+        <Route path="/social" element={<SocialMediaAnalysisPage />} />
         
         {/* Tool Pages */}
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />

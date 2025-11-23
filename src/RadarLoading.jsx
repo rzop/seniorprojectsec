@@ -8,7 +8,7 @@ const RadarLoading = ({ message = "INITIALIZING RADAR SYSTEMS" }) => {
   const [cycleCount, setCycleCount] = useState(0);
   
   const loadingMessages = [
-    "INITIALIZING SECURITY PROTOCOLS..."
+    message
   ];
   
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -37,7 +37,7 @@ const RadarLoading = ({ message = "INITIALIZING RADAR SYSTEMS" }) => {
           setCurrentIndex(prev => prev + 1);
         } else {
           // Start deleting after a pause
-          setTimeout(() => setIsDeleting(true), 800);
+          setTimeout(() => setIsDeleting(true), 500);
         }
       } else {
         if (displayText.length > 0) {
@@ -55,7 +55,7 @@ const RadarLoading = ({ message = "INITIALIZING RADAR SYSTEMS" }) => {
           }
         }
       }
-    }, isDeleting ? 30 : 80);
+    }, isDeleting ? 20 : 50);
 
     return () => clearTimeout(timeout);
   }, [currentIndex, isDeleting, displayText, currentMessage, currentMessageIndex, cycleCount, loadingMessages.length]);
