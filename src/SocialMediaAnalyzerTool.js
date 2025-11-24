@@ -250,7 +250,7 @@ function SocialMediaAnalyzerTool() {
           </button>
         </div>
 
-        <RadarLoading message="PHISHING DETECTION SYSTEMS INITIALIZING" />
+        <RadarLoading message="ANALYZING SOCIAL MEDIA CONTENT" />
       </div>
     );
   }

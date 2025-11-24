@@ -8,6 +8,7 @@ import PhishingTrainingPage from './PhishingTrainingPage';
 import PasswordSecurityPage from './PasswordSecurityPage';
 import SocialMediaAnalysisPage from './SocialMediaAnalysisPage';
 import UnifiedSocialMediaAnalyzer from './UnifiedSocialMediaAnalyzer';
+import PasswordGeneratorAndCheckerTool from './PasswordGeneratorAndCheckerTool';
 import PasswordChecker from './passwordchecker';
 import PasswordGenerator from './passwordgenerator';
 import PasswordInfo from './PasswordInfo';
@@ -127,8 +128,7 @@ function App() {
         {/*New Tool Pages*/}
         <Route path="/phishing-trainer-tool" element={<PhishingTrainerTool />} />
         <Route path="/social-media-analyzer-tool" element={<SocialMediaAnalyzerTool />} />
-        <Route path="/password-generator-tool" element={<PasswordGenerator />} />
-        <Route path="/password-checker-tool" element={<PasswordChecker />} />
+        <Route path="/password-generator-and-checker-tool" element={<PasswordGeneratorAndCheckerTool />} />
 
         {/*Footer Pages*/}
         <Route path="/privacy" element={<PasswordSecurityPage />} />

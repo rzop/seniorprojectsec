@@ -232,7 +232,7 @@ function PasswordSecurityPage() {
               <div className="text-center">
                 <motion.button 
                   className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
-                  onClick={() => navigate('/passwordchecker')}
+                  onClick={() => navigate('/password-generator-and-checker-tool')}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
