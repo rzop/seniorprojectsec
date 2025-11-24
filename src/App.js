@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
+import PhishingTrainerTool from './PhishingTrainerTool';
 import PhishingTrainingPage from './PhishingTrainingPage';
 import PasswordSecurityPage from './PasswordSecurityPage';
 import SocialMediaAnalysisPage from './SocialMediaAnalysisPage';
@@ -100,23 +101,33 @@ function App() {
     <Router>
       <ScrollToTop />
       <Routes>
-        {/*Test Home*/}
+        {/*New Home*/}
         <Route path="/test" element={<HUDTestFixed />} />
+
+        {/*Old Home */}
         <Route path="/" element={<Home />} />
         
-        {/* Info Pages */}
+        {/*Old Info Pages*/}
         <Route path="/password-info" element={<PasswordInfo />} />
-        <Route path="/passwordchecker" element={<PasswordSecurityPage />} />
         <Route path="/phishing-info" element={<PhishingInfo />} />
-        <Route path="/phishing" element={<PhishingTrainingPage />} />
         <Route path="/social-media-info" element={<SocialMediaInfo />} />
+
+        {/*New Info Pages*/}
+        <Route path="/passwordchecker" element={<PasswordSecurityPage />} />
+        <Route path="/phishing" element={<PhishingTrainingPage />} />
         <Route path="/social" element={<SocialMediaAnalysisPage />} />
         
-        {/* Tool Pages */}
+        {/*Old Tool Pages */}
         <Route path="/phishing-trainer" element={<PhishingTrainer />} />
         <Route path="/social-media-analyzer" element={<UnifiedSocialMediaAnalyzer />} />
         <Route path="/password-generator" element={<PasswordGenerator />} />
         <Route path="/password-checker" element={<PasswordChecker />} />
+
+        {/*New Tool Pages*/}
+        <Route path="/phishing-trainer-tool" element={<PhishingTrainerTool />} />
+        <Route path="/social-media-analyzer-tool" element={<UnifiedSocialMediaAnalyzer />} />
+        <Route path="/password-generator-tool" element={<PasswordGenerator />} />
+        <Route path="/password-checker-tool" element={<PasswordChecker />} />
       </Routes>
     </Router>
   );

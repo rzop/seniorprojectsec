@@ -4,26 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { ShieldCheck, Radar as RadarIcon, ArrowLeft, TrendingUp, Users, Eye, Settings, UserCheck } from "lucide-react";
 import "./LoadingAnimations.css";
 import "./HUDTest.css";
-import RadarLoading from "./RadarLoading";
 
 const MotionDiv = motion.div;
 
 function SocialMediaAnalysisPage() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    if (isLoading) {
-      // Show loading animation for 2 seconds
-      const loadingTimer = setTimeout(() => {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-      }, 500);
-
-      return () => clearTimeout(loadingTimer);
-    }
-  }, [isLoading]);
 
   const stats = [
     { value: "2.9 billion", label: "people use social media worldwide", icon: <Users className="h-6 w-6" /> },
@@ -53,52 +38,6 @@ function SocialMediaAnalysisPage() {
       icon: <RadarIcon className="h-6 w-6" />
     }
   ];
-
-  // Show loading screen first
-  if (isLoading) {
-    return (
-      <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
-        {/* Back button during loading */}
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          left: '20px',
-          zIndex: 10000,
-          background: 'rgba(0, 0, 0, 0.9)',
-          padding: '10px 15px',
-        }}>
-          <button 
-            onClick={() => navigate('/test')}
-            style={{
-              background: 'transparent',
-              color: '#00ffff',
-              border: '1px solid #00ffff',
-              cursor: 'pointer',
-              fontSize: '14px',
-              padding: '8px 12px',
-              borderRadius: '4px',
-              fontFamily: 'monospace',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.background = 'rgba(0, 255, 255, 0.1)';
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.background = 'transparent';
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = 'none';
-            }}
-          >
-            ← Back to Home
-          </button>
-        </div>
-
-        <RadarLoading message="SOCIAL MEDIA ANALYSIS SYSTEMS ONLINE" />
-      </div>
-    );
-  }
 
   return (
     <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
@@ -148,7 +87,7 @@ function SocialMediaAnalysisPage() {
 
       {/* Header */}
       <header className="relative z-20 flex items-center justify-center px-8 py-6 backdrop-blur-sm">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3"style={{ paddingTop: '30px' }}>
           <ShieldCheck className="h-8 w-8 text-cyan-400 animate-pulse" />
           <h1 className="text-2xl font-bold" style={{ color: '#00ffff' }}>
             SECURASPHERE

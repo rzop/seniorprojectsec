@@ -93,3 +93,14 @@
 .hud-test-override .animate-bounce {
   color: #00ffff !important;
 }
+
+/* Override for textarea to have black text */
+.hud-test-override .black-text-textarea {
+  color: #000000 !important;
+  background: #ffffff !important;
+  caret-color: #000000 !important;
+}
+
+.hud-test-override .black-text-textarea::placeholder {
+  color: #666666 !important;
+}
