@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from
 import './App.css';
 import PhishingTrainer from './PhishingTrainer';
 import PhishingTrainerTool from './PhishingTrainerTool';
+import SocialMediaAnalyzerTool from './SocialMediaAnalyzerTool';
 import PhishingTrainingPage from './PhishingTrainingPage';
 import PasswordSecurityPage from './PasswordSecurityPage';
 import SocialMediaAnalysisPage from './SocialMediaAnalysisPage';
@@ -125,9 +126,14 @@ function App() {
 
         {/*New Tool Pages*/}
         <Route path="/phishing-trainer-tool" element={<PhishingTrainerTool />} />
-        <Route path="/social-media-analyzer-tool" element={<UnifiedSocialMediaAnalyzer />} />
+        <Route path="/social-media-analyzer-tool" element={<SocialMediaAnalyzerTool />} />
         <Route path="/password-generator-tool" element={<PasswordGenerator />} />
         <Route path="/password-checker-tool" element={<PasswordChecker />} />
+
+        {/*Footer Pages*/}
+        <Route path="/privacy" element={<PasswordSecurityPage />} />
+        <Route path="/terms" element={<PhishingTrainingPage />} />
+        <Route path="/contact" element={<SocialMediaAnalysisPage />} />
       </Routes>
     </Router>
   );

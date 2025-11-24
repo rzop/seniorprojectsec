@@ -78,7 +78,6 @@ function PhishingTrainerTool() {
           top: '20px',
           left: '20px',
           zIndex: 10000,
-          background: 'rgba(0, 0, 0, 0.9)',
           padding: '10px 15px',
         }}>
           <button 
@@ -92,7 +91,10 @@ function PhishingTrainerTool() {
               padding: '8px 12px',
               borderRadius: '4px',
               fontFamily: 'monospace',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}
             onMouseOver={(e) => {
               e.target.style.background = 'rgba(0, 255, 255, 0.1)';
@@ -105,7 +107,8 @@ function PhishingTrainerTool() {
               e.target.style.boxShadow = 'none';
             }}
           >
-            ← Back to Phishing Training
+            <ArrowLeft className="h-4 w-4" />
+            Back to Phishing Information
           </button>
         </div>
 
