@@ -50,11 +50,11 @@ function HUDTestFixed() {
               fontSize: '14px'
             }}
           >
-            ← Back to Main App
+            ← Back to Old App
           </button>
         </div>
 
-        <RadarLoading />
+        <RadarLoading message='ENGAGING SECURITY PROTOCOLS...'/>
       </div>
     );
   }
@@ -98,7 +98,7 @@ function HUDTestFixed() {
             e.target.style.boxShadow = 'none';
           }}
         >
-          ← Back to Main App
+          ← Back to Old App
         </button>
       </div>
 
@@ -112,7 +112,7 @@ function HUDTestFixed() {
       {/* Overlay status */}
       <div className="status-box" style={{
         position: 'fixed',
-        bottom: '20px',
+        bottom: '60px',
         right: '20px',
         padding: '15px',
         borderRadius: '8px',

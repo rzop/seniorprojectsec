@@ -13,6 +13,7 @@ import PasswordChecker from './passwordchecker';
 import PasswordGenerator from './passwordgenerator';
 import PasswordInfo from './PasswordInfo';
 import PhishingInfo from './PhishingInfo';
+import PrivacyPage from './PrivacyPage';
 import SocialMediaInfo from './SocialMediaInfo';
 import HUDTestFixed from './HUDTestFixed';
 
@@ -131,7 +132,7 @@ function App() {
         <Route path="/password-generator-and-checker-tool" element={<PasswordGeneratorAndCheckerTool />} />
 
         {/*Footer Pages*/}
-        <Route path="/privacy" element={<PasswordSecurityPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<PhishingTrainingPage />} />
         <Route path="/contact" element={<SocialMediaAnalysisPage />} />
       </Routes>
