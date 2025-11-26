@@ -6,6 +6,7 @@ import "./LoadingAnimations.css";
 import "./HUDTest.css";
 import Footer from "./components/Footer";
 import BackButton from "./components/BackButton";
+import ForwardButton from "./components/ForwardButton";
 
 const MotionDiv = motion.div;
 
@@ -45,6 +46,8 @@ function PasswordSecurityPage() {
     <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
       {/* Back button positioned like in HUD test */}
       <BackButton message="Back to Home" path="/test" />
+      {/* Forward button to password tool page */}
+      <ForwardButton message="Go to Password Tools" path="/password-generator-and-checker-tool" />
 
       {/* Animated Background Effects */}
       <div className="pointer-events-none absolute inset-0 z-0">
