@@ -15,7 +15,9 @@ function BackButton({ message, path }) {
         <button 
           onClick={() => navigate(path)}
           style={{
-            background: 'transparent',
+            background: 'rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
             color: '#00ffff',
             border: '1px solid #00ffff',
             cursor: 'pointer',

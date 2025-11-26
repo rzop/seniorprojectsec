@@ -44,10 +44,13 @@ function PrivacyPage() {
           <h2 className="mb-4 text-4xl font-bold text-white drop-shadow-lg">
             Privacy Policy
           </h2>
+          <h1 style={{ fontSize: '1rem', color: '#cccccc', marginBottom: '2rem' }}>
+            Last Updated: November 26, 2025
+          </h1>
 
         </div>
         <div style={{ padding: '0rem', maxWidth: '800px', margin: '0 auto', paddingBottom: '120px' }}>
-                <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1rem' }}>
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1rem', textAlign: 'center' }}>
                 At SecuraSphere, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your information when you use our platform.
                 </p>
             <h2 style={{ fontSize: '1.8rem', marginBottom: '1rem', color: '#00ffff' }}>
@@ -70,8 +73,8 @@ function PrivacyPage() {
                 <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1rem' }}>
                 We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.
             </p>
-            <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1rem' }}>
-                If you have any questions about this Privacy Policy, please contact us at{' '}
+            <p style={{ fontSize: '1.0rem', lineHeight: '1.6', marginBottom: '1rem', textAlign: 'center' }}>
+                <br />If you have any questions about this Privacy Policy, please contact us at{' '}
                 <a 
                   href="mailto:wright.macarius@ufl.edu"
                   style={{ 

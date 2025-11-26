@@ -15,6 +15,7 @@ import PasswordInfo from './PasswordInfo';
 import PhishingInfo from './PhishingInfo';
 import PrivacyPage from './PrivacyPage';
 import SocialMediaInfo from './SocialMediaInfo';
+import TermsPage from './TermsPage';
 import HUDTestFixed from './HUDTestFixed';
 
 // Component to scroll to top on route change
@@ -133,7 +134,7 @@ function App() {
 
         {/*Footer Pages*/}
         <Route path="/privacy" element={<PrivacyPage />} />
-        <Route path="/terms" element={<PhishingTrainingPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="/contact" element={<SocialMediaAnalysisPage />} />
       </Routes>
     </Router>

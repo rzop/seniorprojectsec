@@ -48,7 +48,10 @@ function Footer() {
             style={{ transition: 'all 0.3s ease' }}
             onMouseOver={handleLinkHover}
             onMouseOut={handleLinkLeave}
-            onClick={(e) => e.preventDefault()}>
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/terms');
+            }}>
             Terms
           </a>
           <a 
