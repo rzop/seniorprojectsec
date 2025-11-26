@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HUDTest.css';
+import BackButton from './components/BackButton';
 
 // Import components directly instead of dynamic imports
 import HUDNeonWorking from './HUDNeonWorking';
@@ -32,28 +33,9 @@ function HUDTestFixed() {
         position: 'relative'
       }}>
         {/* Back button even during loading */}
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          left: '20px',
-          zIndex: 1000,
-          background: 'rgba(0, 0, 0, 0.8)',
-          padding: '10px 15px',
-        }}>
-          <button 
-            onClick={() => navigate('/')}
-            style={{
-              background: 'transparent',
-              color: '#00ffff',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}
-          >
-            ← Back to Old App
-          </button>
-        </div>
+        <BackButton message='Back to Old App' path='/' />
 
+        {/* Show loading animation */}
         <RadarLoading message='ENGAGING SECURITY PROTOCOLS...'/>
       </div>
     );
@@ -66,41 +48,7 @@ function HUDTestFixed() {
       position: 'relative'
     }}>
       {/* Back button to return to main app */}
-      <div style={{
-        position: 'fixed',
-        top: '20px',
-        left: '20px',
-        zIndex: 10000,
-        background: 'rgba(0, 0, 0, 0.9)',
-        padding: '10px 15px',
-      }}>
-        <button 
-          onClick={() => navigate('/')}
-          style={{
-            background: 'transparent',
-            color: '#00ffff',
-            border: '1px solid #00ffff',
-            cursor: 'pointer',
-            fontSize: '14px',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontFamily: 'monospace',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseOver={(e) => {
-            e.target.style.background = 'rgba(0, 255, 255, 0.1)';
-            e.target.style.transform = 'scale(1.05)';
-            e.target.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
-          }}
-          onMouseOut={(e) => {
-            e.target.style.background = 'transparent';
-            e.target.style.transform = 'scale(1)';
-            e.target.style.boxShadow = 'none';
-          }}
-        >
-          ← Back to Old App
-        </button>
-      </div>
+      <BackButton message='Back to Old App' path='/' />
 
       {/* Toggle button removed - no longer needed */}
       

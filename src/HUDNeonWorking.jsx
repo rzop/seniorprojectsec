@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { ShieldCheck, MailSearch, KeyRound, Radar as RadarIcon, ChevronRight } from "lucide-react";
 import "./LoadingAnimations.css";
+import Footer from "./components/Footer";
 
 const MotionLink = motion(Link);
 
@@ -115,60 +116,7 @@ function HUDNeonWorking() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-20 border-t border-cyan-800/20 px-8 py-6 backdrop-blur-sm"
-        style={{
-        position: 'fixed',
-        bottom: '0',
-        left: '0',
-        right: '0',
-        paddingTop: '12px',
-        paddingBottom: '15px'
-        }}>
-        <div className="flex items-center justify-between text-sm text-cyan-300/60">
-          <p>© 2025 SecuraSphere. Team CAWWZ. UF Senior Project.</p>
-          <div className="flex gap-6">
-            <a href="#" 
-              className="hover:text-cyan-100 transition-colors"
-              style={{ transition: 'all 0.3s ease' }}
-              onMouseOver={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.8)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.textShadow = 'none';
-            }} 
-              onClick={() => navigate('/privacy')}>
-              Privacy
-            </a>
-            <a href="#" className="hover:text-cyan-100 transition-colors"
-            style={{ transition: 'all 0.3s ease' }}
-            onMouseOver={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.8)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.textShadow = 'none';
-            }}>Terms
-            </a>
-
-            <a href="#" className="hover:text-cyan-100 transition-colors"
-            style={{ transition: 'all 0.3s ease' }}
-            onMouseOver={(e) => {
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.8)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.transform = 'scale(1)';
-              e.target.style.textShadow = 'none';
-            }}
-            >Contact
-            </a>
-
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

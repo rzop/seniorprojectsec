@@ -6,6 +6,8 @@ import { Shield, ArrowLeft, AlertTriangle, Brain, Key, Eye, Search, CheckCircle,
 import './LoadingAnimations.css';
 import './HUDTest.css';
 import RadarLoading from './RadarLoading';
+import Footer from './components/Footer';
+import BackButton from './components/BackButton';
 
 const MotionDiv = motion.div;
 
@@ -291,45 +293,10 @@ function PasswordGeneratorAndCheckerTool() {
   if (isLoading) {
     return (
       <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          left: '20px',
-          zIndex: 10000,
-          padding: '10px 15px',
-        }}>
-          <button 
-            onClick={() => navigate('/passwordchecker')}
-            style={{
-              background: 'transparent',
-              color: '#00ffff',
-              border: '1px solid #00ffff',
-              cursor: 'pointer',
-              fontSize: '14px',
-              padding: '8px 12px',
-              borderRadius: '4px',
-              fontFamily: 'monospace',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.background = 'rgba(0, 255, 255, 0.1)';
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.background = 'transparent';
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = 'none';
-            }}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Password Security
-          </button>
-        </div>
-
+        {/* Back button */}
+        <BackButton message="Back to Password Security" path="/passwordchecker" />
+        
+        {/* Show loading animation */}
         <RadarLoading message="PASSWORD SECURITY SYSTEMS INITIALIZING" />
       </div>
     );
@@ -344,45 +311,7 @@ function PasswordGeneratorAndCheckerTool() {
       </div>
 
       {/* Back button */}
-      <div style={{
-        position: 'fixed',
-        background: 'rgba(0, 0, 0, 1)',
-        top: '20px',
-        left: '20px',
-        zIndex: 1000,
-        padding: '5px',
-        margin: '0px',
-        borderRadius: '4px'
-      }}>
-        <button 
-          onClick={() => navigate('/passwordchecker')}
-          style={{
-            background: 'transparent',
-            color: '#00ffff',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '14px',
-            padding: '8px 12px',
-            fontFamily: 'monospace',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            transition: 'all 0.3s ease',
-            marginTop: '0px'
-          }}
-          onMouseOver={(e) => {
-            e.target.style.transform = 'scale(1.05)';
-            e.target.style.textShadow = '0 0 10px rgba(0, 255, 255, 0.8)';
-          }}
-          onMouseOut={(e) => {
-            e.target.style.transform = 'scale(1)';
-            e.target.style.textShadow = 'none';
-          }}
-        >
-          <ArrowLeft className="h-5 w-5" />
-          Back to Password Security
-        </button>
-      </div>
+      <BackButton message="Back to Password Security" path="/passwordchecker" />
 
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col">
@@ -995,13 +924,7 @@ function PasswordGeneratorAndCheckerTool() {
             </div>
             
             {/* Footer */}
-            <div className="border-t border-cyan-500/30 bg-black/50 backdrop-blur-md py-6 mt-8 rounded-lg">
-              <div className="text-center">
-                <p className="text-cyan-300 font-mono">
-                  &nbsp;&nbsp;SECURASPHERE&nbsp;-&nbsp;PASSWORD&nbsp;SECURITY&nbsp;SUITE&nbsp;&nbsp;
-                </p>
-              </div>
-            </div>
+                <Footer />
               </MotionDiv>
             </header>
           </div>

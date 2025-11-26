@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ShieldCheck, KeyRound, ArrowLeft, TrendingUp, Lock, Shield, RefreshCw, Database } from "lucide-react";
 import "./LoadingAnimations.css";
 import "./HUDTest.css";
+import Footer from "./components/Footer";
+import BackButton from "./components/BackButton";
 
 const MotionDiv = motion.div;
 
@@ -42,41 +44,7 @@ function PasswordSecurityPage() {
   return (
     <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
       {/* Back button positioned like in HUD test */}
-      <div style={{
-        position: 'fixed',
-        top: '20px',
-        left: '20px',
-        zIndex: 10000,
-        background: 'rgba(0, 0, 0, 0.9)',
-        padding: '10px 15px',
-      }}>
-        <button 
-          onClick={() => navigate('/test')}
-          style={{
-            background: 'transparent',
-            color: '#00ffff',
-            border: '1px solid #00ffff',
-            cursor: 'pointer',
-            fontSize: '14px',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontFamily: 'monospace',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseOver={(e) => {
-            e.target.style.background = 'rgba(0, 255, 255, 0.1)';
-            e.target.style.transform = 'scale(1.05)';
-            e.target.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
-          }}
-          onMouseOut={(e) => {
-            e.target.style.background = 'transparent';
-            e.target.style.transform = 'scale(1)';
-            e.target.style.boxShadow = 'none';
-          }}
-        >
-          ← Back to Home
-        </button>
-      </div>
+      <BackButton message="Back to Home" path="/test" />
 
       {/* Animated Background Effects */}
       <div className="pointer-events-none absolute inset-0 z-0">
@@ -245,16 +213,7 @@ function PasswordSecurityPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-20 border-t border-cyan-800/20 px-8 py-6 backdrop-blur-sm">
-        <div className="flex items-center justify-between font-mono" style={{ fontSize: '14px', color: '#00ffff' }}>
-          <p>© 2025 SecuraSphere. Team CAWWZ. UF Senior Project.</p>
-          <div className="flex gap-6">
-            <a href="#" className="transition-colors" style={{ color: '#00ffff' }} onMouseOver={(e) => e.target.style.color = '#ffffff'} onMouseOut={(e) => e.target.style.color = '#00ffff'}>Privacy</a>
-            <a href="#" className="transition-colors" style={{ color: '#00ffff' }} onMouseOver={(e) => e.target.style.color = '#ffffff'} onMouseOut={(e) => e.target.style.color = '#00ffff'}>Terms</a>
-            <a href="#" className="transition-colors" style={{ color: '#00ffff' }} onMouseOver={(e) => e.target.style.color = '#ffffff'} onMouseOut={(e) => e.target.style.color = '#00ffff'}>Contact</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
