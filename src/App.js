@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
+import AboutPage from './AboutPage';
+import ContactPage from './ContactPage';
 import PhishingTrainer from './PhishingTrainer';
 import PhishingTrainerTool from './PhishingTrainerTool';
 import SocialMediaAnalyzerTool from './SocialMediaAnalyzerTool';
@@ -133,9 +135,11 @@ function App() {
         <Route path="/password-generator-and-checker-tool" element={<PasswordGeneratorAndCheckerTool />} />
 
         {/*Footer Pages*/}
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
-        <Route path="/contact" element={<SocialMediaAnalysisPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+
       </Routes>
     </Router>
   );

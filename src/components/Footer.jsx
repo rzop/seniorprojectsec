@@ -38,6 +38,18 @@ function Footer() {
             onMouseOut={handleLinkLeave}
             onClick={(e) => {
               e.preventDefault();
+              navigate('/about');
+            }}>
+            About
+          </a>
+          <a 
+            href="#" 
+            className="hover:text-cyan-100 transition-colors"
+            style={{ transition: 'all 0.3s ease' }}
+            onMouseOver={handleLinkHover}
+            onMouseOut={handleLinkLeave}
+            onClick={(e) => {
+              e.preventDefault();
               navigate('/privacy');
             }}>
             Privacy
@@ -60,7 +72,10 @@ function Footer() {
             style={{ transition: 'all 0.3s ease' }}
             onMouseOver={handleLinkHover}
             onMouseOut={handleLinkLeave}
-            onClick={(e) => e.preventDefault()}>
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/contact');
+            }}>
             Contact
           </a>
         </div>
