@@ -7,6 +7,7 @@ import "./HUDTest.css";
 import Footer from './components/Footer';
 import BackButton from './components/BackButton';
 import ForwardButton from './components/ForwardButton';
+import AIHelper from "./components/AIHelper";
 
 const MotionDiv = motion.div;
 
@@ -75,6 +76,8 @@ function PhishingTrainingPage() {
     <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
       {/* Back button positioned like in HUD test */}
       <BackButton message="Back to Home" path="/test" />
+      {/* AI Helper Component */}
+      <AIHelper />
       {/* Forward button to phishing tool page */}
       <ForwardButton message="Go to Phishing Email Detector" path="/phishing-trainer-tool" />
       {/* Animated Background Effects */}
@@ -242,7 +245,6 @@ function PhishingTrainingPage() {
           </div>
         </MotionDiv>
       </main>
-
       {/* Footer */}
       <Footer />
     </div>

@@ -8,6 +8,7 @@ import './HUDTest.css';
 import RadarLoading from './RadarLoading';
 import Footer from './components/Footer';
 import BackButton from './components/BackButton';
+import AIHelper from './components/AIHelper';
 
 const MotionDiv = motion.div;
 
@@ -309,6 +310,9 @@ function PasswordGeneratorAndCheckerTool() {
         <div className="grid-background opacity-20"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/10 via-transparent to-purple-900/10"></div>
       </div>
+
+      {/* AI Helper Component */}
+      <AIHelper />
 
       {/* Back button */}
       <BackButton message="Back to Password Security" path="/passwordchecker" />

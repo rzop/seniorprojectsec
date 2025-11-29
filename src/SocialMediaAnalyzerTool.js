@@ -8,6 +8,7 @@ import './HUDTest.css';
 import RadarLoading from './RadarLoading';
 import Footer from './components/Footer';
 import BackButton from './components/BackButton';
+import AIHelper from './components/AIHelper';
 
 const MotionDiv = motion.div;
 
@@ -214,7 +215,7 @@ function SocialMediaAnalyzerTool() {
       <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
         {/* Back button during loading */}
         <BackButton message='Back to Social Media Information' path='/social' />
-
+        {/* Loading animation */}
         <RadarLoading message="ANALYZING SOCIAL MEDIA CONTENT" />
       </div>
     );
@@ -230,6 +231,9 @@ function SocialMediaAnalyzerTool() {
 
       {/* Back button */}
       <BackButton message='Back to Social Media Information' path='/social' />
+
+      {/* AI Helper Component */}
+      <AIHelper />
 
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col">

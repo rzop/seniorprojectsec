@@ -8,6 +8,7 @@ import './HUDTest.css';
 import RadarLoading from './RadarLoading';
 import Footer from './components/Footer';
 import BackButton from './components/BackButton';
+import AIHelper from './components/AIHelper';
 
 const MotionDiv = motion.div;
 
@@ -357,6 +358,8 @@ function PhishingTrainerTool() {
             </MotionDiv>
               </div>
             </div>
+            {/* AI Helper Component */}
+            <AIHelper />
 
               {/* Footer */}
                 <Footer />

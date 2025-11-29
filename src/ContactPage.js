@@ -5,6 +5,7 @@ import { ArrowLeft, ShieldCheck, Radar as RadarIcon} from "lucide-react";
 import "./LoadingAnimations.css";
 import Footer from './components/Footer';
 import BackButton from './components/BackButton';
+import AIHelper from './components/AIHelper';
 
 function ContactPage() {
     const navigate = useNavigate();
@@ -73,7 +74,8 @@ function ContactPage() {
                 </a>.
                 </p>
         </div>
-
+      {/* AI Helper Component */}
+      <AIHelper />
     {/* Footer */}
     <Footer />
     </div>

@@ -38,10 +38,7 @@
 }
 
 .hud-test-override .status-box {
-  color: #00ffff !important;
-  background: rgba(0, 0, 0, 0.8) !important;
   font-family: monospace !important;
-  border: 1px solid #00ffff !important;
 }
 
 .hud-test-override button {
@@ -103,4 +100,13 @@
 
 .hud-test-override .black-text-textarea::placeholder {
   color: #666666 !important;
+}
+
+.ai-helper {
+  animation: hudSlideIn 0.3s ease-out;
+}
+
+@keyframes hudSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

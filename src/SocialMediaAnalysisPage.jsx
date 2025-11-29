@@ -7,6 +7,7 @@ import "./HUDTest.css";
 import Footer from "./components/Footer";
 import BackButton from "./components/BackButton";
 import ForwardButton from "./components/ForwardButton";
+import AIHelper from "./components/AIHelper";
 
 const MotionDiv = motion.div;
 
@@ -76,6 +77,8 @@ function SocialMediaAnalysisPage() {
     <div className="hud-test-override relative min-h-screen bg-black text-cyan-100 overflow-hidden">
       {/* Back button positioned like in HUD test */}
       <BackButton message="Back to Home" path="/test" />
+      {/* AI Helper Component */}
+      <AIHelper />
       {/* Forward button to social media tool page */}
       <ForwardButton message="Go to Social Media Anazlyzer" path="/social-media-analyzer-tool" />
 
