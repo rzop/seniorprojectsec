@@ -110,7 +110,7 @@ function SocialMediaAnalysisPage() {
         >
           <div className="flex items-center justify-center gap-4 mb-4">
             <h2 className="text-5xl font-bold text-white drop-shadow-lg" style={{ fontSize: '3rem' }}>
-              Social Media Privacy Tools
+              Social Media Privacy Training
             </h2>
           </div>
         </MotionDiv>
@@ -237,7 +237,7 @@ function SocialMediaAnalysisPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Start Privacy Analysis
+                  Start Social Media Analysis
                 </motion.button>
               </div>
             </div>

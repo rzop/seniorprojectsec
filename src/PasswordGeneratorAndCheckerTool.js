@@ -333,7 +333,7 @@ function PasswordGeneratorAndCheckerTool() {
             <div className="flex justify-center items-center space-x-4">
               <Lock className="h-12 w-12 text-cyan-400" />
               <h1 style={{ fontSize: '3rem' }} className="font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                &nbsp;&nbsp;PASSWORD&nbsp;SECURITY&nbsp;TOOL&nbsp;&nbsp;
+                &nbsp;&nbsp;PASSWORD&nbsp;SECURITY&nbsp;TOOLS&nbsp;&nbsp;
               </h1>
               <Key className="h-12 w-12 text-purple-400" />
             </div>

@@ -111,7 +111,7 @@ function PasswordSecurityPage() {
         >
           <div className="flex items-center justify-center gap-4 mb-4">
             <h2 className="text-5xl font-bold text-white drop-shadow-lg" style={{ fontSize: '3rem' }}>
-              Password Security Tools
+              Password Training
             </h2>
           </div>
         </MotionDiv>
